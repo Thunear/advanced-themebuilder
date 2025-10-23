@@ -1,0 +1,48 @@
+# Built files
+dist
+ignore
+tsc-build
+*.tsbuildinfo
+
+# Yarn stuff; we're not using PnP/Zero installs
+.pnp.*
+yarn-error.log
+
+# Really don't want that
+node_modules
+
+# Local env variables should stay local
+.env
+.env.local
+
+coverage/
+.eslintcache
+
+# Visual Studio code coverage results
+*.coverage
+*.coveragexml
+
+# JetBrains IntelliJ IDEA
+.idea
+
+# Hidden macOS files
+.DS_Store
+
+# Vercel config files
+.vercel/
+
+# Next
+.next
+
+# Typescript
+next-env.d.ts
+
+# jest/vitest test reports
+test-report.xml
+
+packages/cli/test-tokens
+packages/cli/internal
+
+# React Router
+.react-router
+apps/www/build
