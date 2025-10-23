@@ -1,0 +1,110 @@
+.ds-tabs {
+  --dsc-tabs-tab-padding: var(--ds-size-3) var(--ds-size-5);
+  --dsc-tabs-tab-color: var(--ds-color-neutral-text-subtle);
+  --dsc-tabs-tab-color--hover: var(--ds-color-neutral-text-default);
+  --dsc-tabs-tab-color--selected: var(--ds-color-text-subtle);
+  --dsc-tabs-content-padding: var(--ds-size-4) var(--ds-size-5);
+  --dsc-tabs-list-border-color: var(--ds-color-neutral-border-subtle);
+  --dsc-tabs-list-border-bottom-width: var(--ds-border-width-default);
+  --dsc-tabs-list-border-bottom-style: solid;
+
+  & [role='tabpanel'],
+  & u-tabpanel {
+    padding: var(--dsc-tabs-content-padding);
+
+    @composes ds-focus from './base.css';
+  }
+
+  & [role='tablist'],
+  & u-tablist {
+    flex-direction: row;
+    border-bottom-width: var(--dsc-tabs-list-border-bottom-width);
+    border-bottom-style: var(--dsc-tabs-list-border-bottom-style);
+    border-color: var(--dsc-tabs-list-border-color);
+    position: relative;
+    overflow-x: auto;
+
+    &:not([hidden]) {
+      display: flex;
+    }
+
+    & button,
+    & u-tab {
+      align-items: center;
+      background: none;
+      border: 0;
+      box-sizing: border-box;
+      color: var(--dsc-tabs-tab-color);
+      cursor: pointer;
+      flex-direction: row;
+      font-family: inherit;
+      font-size: inherit;
+      gap: var(--ds-size-1);
+      justify-content: center;
+      line-height: var(--ds-line-height-sm);
+      margin: 0;
+      padding: var(--dsc-tabs-tab-padding);
+      position: relative;
+      text-align: center;
+      white-space: nowrap;
+
+      @composes ds-focus--inset from './base.css';
+
+      &:not([hidden]) {
+        display: flex;
+      }
+
+      &:not([data-size]) {
+        font-size: inherit; /* Ensure inheriting font-size when <button> */
+      }
+
+      & :where(img, svg) {
+        flex-shrink: 0; /* Never shrink icon */
+        font-size: 1.25em; /* Auto scale icon based on font-size */
+      }
+
+      &[aria-selected='true'] {
+        color: var(--dsc-tabs-tab-color--selected);
+
+        &::after {
+          background: var(--dsc-tabs-tab-color--selected);
+        }
+
+        /* Place active line under focus */
+        &:focus-visible::after {
+          z-index: -1;
+        }
+
+        @media (forced-colors: active) {
+          color: CanvasText;
+          border-bottom: 2px solid CanvasText;
+        }
+      }
+
+      /* We set z-index to make sure the active line does not bleed over the focus indicator */
+      &:focus-visible {
+        z-index: 2;
+      }
+
+      &::after {
+        content: '';
+        display: block;
+        height: .15em; /* Scale with font */
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        &:hover:not([aria-selected='true']) {
+          color: var(--dsc-tabs-tab-color--hover);
+
+          &::after {
+            background: var(--dsc-tabs-list-border-color);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["../../packages/theme/brand/colors.d.ts"]
+  },
+  "files": ["./.storybook/componentOverrides.module.scss"],
+  "include": [
+    ".",
+    "./.storybook/**/*",
+    "../../packages/css/postcss.config.js",
+    "../../vite.config.ts"
+  ]
+}

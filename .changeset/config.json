@@ -1,0 +1,30 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.2/schema.json",
+  "changelog": [
+    "@svitejs/changesets-changelog-github-compact",
+    {
+      "repo": "digdir/designsystemet"
+    }
+  ],
+  "commit": false,
+  "fixed": [
+    [
+      "@digdir/designsystemet",
+      "@digdir/designsystemet-css",
+      "@digdir/designsystemet-theme",
+      "@digdir/designsystemet-react"
+    ]
+  ],
+  "linked": [],
+  "access": "restricted",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": [
+    "@web/www",
+    "theme",
+    "storefront",
+    "@internal/components",
+    "@web/storybook",
+    "@plugin/figma"
+  ]
+}

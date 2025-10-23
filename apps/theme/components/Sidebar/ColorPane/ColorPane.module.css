@@ -1,0 +1,85 @@
+.colorPage {
+  border-radius: 8px;
+  display: none;
+  z-index: 5;
+}
+
+.title {
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+
+.name {
+  margin-bottom: 20px;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.topBtnGroup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: -10px;
+}
+
+.btnGroup {
+  display: flex;
+  margin-top: 24px;
+  gap: 16px;
+}
+
+.colorPreviewContainer {
+  border: 1px solid var(--ds-color-neutral-border-subtle);
+  margin-bottom: 16px;
+  border-radius: 8px;
+}
+
+.colorPreview {
+  height: 60px;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.back {
+  margin-left: -16px;
+}
+
+.cancel {
+  margin-right: auto;
+}
+
+.removeBtn {
+  margin-right: -16px;
+}
+
+.show {
+  display: block;
+}
+
+.desc {
+  color: var(--ds-color-neutral-text-subtle);
+  margin-bottom: 16px;
+}
+
+.slider {
+  color: white;
+  padding: 0 16px;
+}
+
+.advancedBtn {
+  margin-top: 16px;
+  margin-left: -12px;
+}
+
+.alert {
+  background-color: var(--ds-color-warning-surface-tinted);
+  padding: 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 12px;
+  border-left: 5px solid var(--ds-color-warning-border-subtle);
+}

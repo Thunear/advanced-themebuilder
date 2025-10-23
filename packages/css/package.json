@@ -1,0 +1,43 @@
+{
+  "name": "@digdir/designsystemet-css",
+  "version": "1.0.5",
+  "description": "CSS for Designsystemet",
+  "author": "Designsystemet team",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digdir/designsystemet.git"
+  },
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./types.d.ts",
+      "default": "./dist/src/index.css"
+    },
+    "./*": "./dist/src/*"
+  },
+  "files": ["./types.d.ts", "dist"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "browserslist": [
+    "cover 90% in NO",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "keywords": ["css", "designsystem", "designsystemet", "digdir"],
+  "scripts": {
+    "build": "rimraf dist && postcss ./src/*.css --base . --dir ./dist"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "cssnano": "^7.0.6",
+    "postcss": "^8.5.3",
+    "postcss-cli": "^11.0.1",
+    "postcss-import": "^16.1.0",
+    "postcss-nesting": "^13.0.1",
+    "rimraf": "^6.0.1"
+  }
+}

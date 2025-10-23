@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "types": []
+  },
+  "references": [
+    { "path": "./tsconfig.lib.json" },
+    { "path": "./tsconfig.stories.json" },
+    { "path": "./tsconfig.tests.json" }
+  ],
+  "files": [],
+  "include": []
+}

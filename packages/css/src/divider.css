@@ -1,0 +1,13 @@
+.ds-divider {
+  --dsc-divider-border-width: var(--ds-border-width-default);
+  --dsc-divider-border-style: solid;
+  --dsc-divider-border-color: var(--ds-color-neutral-border-subtle);
+
+  border-width: 0; /* Unset default <hr> border */
+  border-top-width: var(--dsc-divider-border-width);
+  border-top-style: var(--dsc-divider-border-style);
+  border-color: var(--dsc-divider-border-color);
+  box-sizing: border-box;
+  margin-block: 0.5em;
+  width: 100%;
+}

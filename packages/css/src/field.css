@@ -1,0 +1,154 @@
+.ds-field {
+  --dsc-field-content-spacing: var(--ds-size-2);
+
+  /* The stack (https://every-layout.dev/layouts/stack/) */
+  & > * {
+    margin-block: 0;
+  }
+  & > * + * {
+    margin-top: var(--dsc-field-content-spacing);
+  }
+
+  & [data-field='description'] {
+    color: var(--ds-color-neutral-text-subtle); /* TODO: Change to opacity or color-mix(currentColor, trasparent) to ensure contrast when parent element color changes? */
+  }
+
+  & input:not([hidden]) {
+    display: block; /* Ensure input is not placed on same line as label/description/validation */
+  }
+
+  /**
+   * States
+   */
+  &:has([aria-disabled='true']:not(u-option, [role='option'][aria-disabled='true']), :disabled:not(option)) > * {
+    cursor: not-allowed;
+    opacity: var(--ds-opacity-disabled);
+  }
+
+  &:has([aria-readonly='true'], [readonly]) label {
+    @composes ds-readonly-icon from './base.css'; /* Activate lock icon for label when readonly */
+  }
+
+  /**
+   * Toggle inputs
+   */
+  &:has(input:is([type='radio'], [type='checkbox'])) {
+    border-radius: var(--ds-border-radius-md);
+    grid-template-areas: 'input content';
+    grid-template-columns: auto 1fr;
+    column-gap: var(--dsc-field-content-spacing);
+    width: fit-content; /* Rather do display: grid + width: fit-content than display: inline-grid to encourage stacked radios */
+
+    &:not([hidden]) {
+      display: grid;
+    }
+
+    & > * {
+      margin-block: 0; /* Reset "the stack" */
+      grid-column: content; /* Only allow input in column 1 */
+    }
+
+    & label {
+      font-weight: var(--ds-font-weight-regular);
+    }
+    & label::before {
+      content: none; /* Hide readonly icon on toggle inputs */
+    }
+
+    & input {
+      grid-column: input; /* Always place input in column 1 */
+      grid-row: 1; /* Always place input in row 1 */
+    }
+
+    &:not(:has([readonly], [aria-disabled='true']:not(u-option), :disabled:not(option))) label {
+      cursor: pointer;
+    }
+
+    &:has(input:focus-visible) {
+      @composes ds-focus--visible from './base.css';
+    }
+
+    &:has(input:only-child) {
+      gap: 0; /* No gap only <input> with aria-label/aria-labelledby */
+    }
+
+    /* Using .ds-input to ensure it's only our component */
+    & .ds-input:is([type='radio'], [type='checkbox']):not([aria-label]) {
+      translate: 0 calc((1lh - 100%) / 2); /* Align with first line of <label> text, but not if having aria-label as <label> */
+    }
+
+    &[data-position='end'] {
+      grid-template-areas: 'content input';
+      grid-template-columns: 1fr auto;
+      width: auto;
+    }
+  }
+}
+
+/**
+ * Affix
+ */
+.ds-field-affixes {
+  --dsc-field-affix-border-width: var(--ds-border-width-default);
+  --dsc-field-affix-border-style: solid;
+  --dsc-field-affix-border-color: var(--ds-color-neutral-border-default);
+  --dsc-field-affix-padding-inline: var(--ds-size-4);
+
+  background: var(--ds-color-neutral-surface-tinted);
+  border-radius: var(--ds-border-radius-md);
+  box-sizing: border-box;
+  color: var(--ds-color-neutral-text-subtle);
+  max-width: 100%;
+  white-space: nowrap;
+
+  &:not([hidden]) {
+    display: flex;
+  }
+
+  &:has([size]) {
+    width: fit-content;
+  }
+
+  & .ds-field-affix {
+    align-items: center;
+    border-width: var(--dsc-field-affix-border-width);
+    border-style: var(--dsc-field-affix-border-style);
+    border-color: var(--dsc-field-affix-border-color);
+    flex-shrink: 0;
+    padding-inline: var(--dsc-field-affix-padding-inline);
+
+    &:not([hidden]) {
+      display: flex;
+    }
+
+    &:first-child {
+      border-top-left-radius: inherit;
+      border-bottom-left-radius: inherit;
+      border-right: 0;
+    }
+
+    &:last-child {
+      border-top-right-radius: inherit;
+      border-bottom-right-radius: inherit;
+      border-left: 0;
+    }
+  }
+
+  & .ds-input {
+    border-width: var(--dsc-field-affix-border-width);
+    border-style: var(--dsc-field-affix-border-style);
+    flex: 1 1 auto;
+
+    /* if it has affix after */
+    &:not(:last-child) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    /* if it has affix before */
+    &:not(:first-child) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}

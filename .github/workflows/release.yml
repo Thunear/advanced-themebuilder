@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/gh-setup
+      - name: Store release version for changeset
+        id: release_version
+        run: echo "VALUE=$(bash ./scripts/print_release_version.sh)" >> $GITHUB_OUTPUT
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        # Forked version of the changesets action that supports aggregated releases
+        uses: dotansimha/changesets-action@v1.5.2
+        with:
+          publish: pnpm publish
+          version: pnpm version-packages
+          commit: 'chore: new release'
+          title: 'chore: new release'
+          createGithubReleases: aggregate
+          githubReleaseName: v${{ steps.release_version.outputs.value }}
+          githubTagName: v${{ steps.release_version.outputs.value }}
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+

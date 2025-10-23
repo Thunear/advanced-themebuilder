@@ -1,0 +1,20 @@
+.panel {
+  background-color: var(--ds-color-neutral-surface-default);
+  box-shadow: var(--ds-shadow-xs);
+  border-radius: 8px;
+  margin-top: 28px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.basicPanel {
+  background-color: var(--ds-color-neutral-surface-default);
+  box-shadow: var(--ds-shadow-xs);
+  border-radius: 8px;
+  width: 100%;
+  padding: var(--ds-size-6);
+}
+
+.colorsContainer {
+  overflow: auto;
+}

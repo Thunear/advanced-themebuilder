@@ -1,0 +1,36 @@
+{
+  "git.rebaseWhenSync": true,
+  "git.autofetch": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  },
+  "editor.defaultFormatter": "biomejs.biome",
+  "css.customData": [
+    "./.vscode/css-data.json"
+  ],
+  "[css]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "cssvar.files": [
+    "packages/theme/brand/digdir/color-scheme/light.css",
+    "packages/theme/brand/digdir/typography/primary.css",
+    "packages/theme/brand/digdir/semantic.css"
+  ],
+  "html-css-class-completion.includeGlobPattern": "packages/css/**/*.{css,html}",
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
+}
