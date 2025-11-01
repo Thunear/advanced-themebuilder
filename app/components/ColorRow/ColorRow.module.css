@@ -1,0 +1,17 @@
+.test {
+  display: flex;
+  gap: var(--ds-size-4);
+  justify-content: center;
+}
+
+.themes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-size-1);
+}
+
+.active {
+  outline: 3px dashed rgb(87, 87, 87);
+  outline-offset: 8px;
+  border-radius: 1px;
+}

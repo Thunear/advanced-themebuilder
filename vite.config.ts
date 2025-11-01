@@ -1,17 +1,8 @@
-import react from '@vitejs/plugin-react-swc';
-import { defineConfig } from 'vite';
+import { reactRouter } from "@react-router/dev/vite";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  define: { 'process.env': {} },
-  plugins: [react()],
-  server: {
-    watch: {
-      usePolling: true,
-    },
-  },
-  // Temporary "fix" https://github.com/storybookjs/storybook/issues/28542
-  optimizeDeps: {
-    exclude: ['./node_modules/.cache/storybook'],
-  },
+  plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
 });

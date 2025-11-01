@@ -1,0 +1,36 @@
+.header {
+  height: 80px;
+  background-color: var(--ds-color-neutral-background-default);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--ds-color-neutral-border-subtle);
+  color: var(--ds-color-neutral-text-default);
+}
+
+.menu {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logo {
+  height: 29px;
+}
+
+.right {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+}

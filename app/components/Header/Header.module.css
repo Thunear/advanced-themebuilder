@@ -1,0 +1,25 @@
+.header {
+  background-color: var(--ds-color-neutral-background-default);
+  height: 160px;
+  border-bottom: 1px solid var(--ds-color-neutral-border-subtle);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.img {
+  position: absolute;
+  right: -200px;
+  top: -238px;
+}
+
+.tag {
+  background: linear-gradient(to right, #e7dfff, #ffcce4);
+  font-size: 20px;
+  font-weight: 500;
+  padding: 9px 13px;
+  margin-left: 12px;
+  border-radius: 4px;
+  color: rgb(36, 36, 36);
+}

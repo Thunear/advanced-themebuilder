@@ -1,0 +1,24 @@
+.content {
+  display: flex;
+  gap: 28px;
+  max-width: 100%;
+}
+
+.main {
+  flex: 1 1 0%; /* can grow, can shrink, no intrinsic basis */
+  min-width: 0; /* <-- critical: allows shrinking */
+  overflow-wrap: anywhere;
+}
+
+.aside {
+  flex: 0 0 450px;
+}
+
+.shrink {
+  flex: 0 0 64px;
+  width: 64px;
+}
+
+.app {
+  background-color: var(--ds-color-neutral-background-tinted);
+}

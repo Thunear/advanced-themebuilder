@@ -1,0 +1,5 @@
+.footer {
+  background-color: var(--ds-color-neutral-base-default);
+  padding: 50px;
+  margin-top: 32px;
+}

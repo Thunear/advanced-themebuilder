@@ -1,0 +1,20 @@
+.toolbar {
+  background-color: var(--ds-color-neutral-surface-default);
+  padding: 20px;
+  border-radius: var(--ds-border-radius-lg);
+  box-shadow: var(--ds-shadow-xs);
+  margin-bottom: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toolbar svg {
+  font-size: 1.75rem;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
