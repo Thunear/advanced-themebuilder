@@ -15,3 +15,6 @@ export { BorderRadiusInput } from "./BorderRadiusInput/BorderRadiusInput";
 export { Footer } from "./Footer/Footer";
 export { ColorHeadings } from "./ColorHeadings/ColorHeadings";
 export { SaturationRadio } from "./SaturationRadio/SaturationRadio";
+export { ColorThemeSwitcher } from "./ColorThemeSwitcher/ColorThemeSwitcher";
+export { SectionText } from "./SectionText/SectionText";
+export { ColorPreview } from "./ColorPreview/ColorPreview";

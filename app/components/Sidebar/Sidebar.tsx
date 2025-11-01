@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import { useThemeStore } from "../../../store";
 
 import {
+  Button,
   Dialog,
   Heading,
   Tabs,
   useMediaQuery,
 } from "@digdir/designsystemet-react";
-import { CogIcon } from "@navikt/aksel-icons";
+import { CogIcon, RocketIcon } from "@navikt/aksel-icons";
 import { BorderRadiusInput } from "../BorderRadiusInput/BorderRadiusInput";
 import { ColorsPane, FrontPane } from "../../panes";
 import classes from "./Sidebar.module.css";
@@ -62,8 +63,20 @@ export const Sidebar = () => {
         >
           {activePane === "front" && <FrontPane />}
           {activePane.startsWith("colors") && <ColorsPane />}
+          {activePane === "front" && (
+            <button
+              className={classes.btn}
+              onClick={() => {
+                setActivePane("front");
+              }}
+            >
+              <RocketIcon title="a11y-title" fontSize="1.5rem" />
+              Ta i bruk temaet ditt
+            </button>
+          )}
         </div>
       </div>
+
       {isMobile && (
         <Dialog
           open={modalOpen}

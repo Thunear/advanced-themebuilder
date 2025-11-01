@@ -3,7 +3,12 @@ import {
   generateColorSchemes,
   getBaseDarkLightness,
 } from "../../../colors";
-import { Button, Checkbox, Heading } from "@digdir/designsystemet-react";
+import {
+  Button,
+  Checkbox,
+  Heading,
+  Switch,
+} from "@digdir/designsystemet-react";
 import type { CssColor } from "../../../colors";
 import { ChevronLeftIcon, CogIcon, PlusIcon } from "@navikt/aksel-icons";
 import { useEffect, useState } from "react";
@@ -16,7 +21,10 @@ import classes from "./ColorsPane.module.css";
 
 export const ColorsPane = () => {
   type ColorType = "main" | "neutral" | "support" | "severity";
-
+  const showSeverityColors = useThemeStore((state) => state.showSeverityColors);
+  const setShowSeverityColors = useThemeStore(
+    (state) => state.setShowSeverityColors
+  );
   const removeColor = useThemeStore((state) => state.removeColor);
   const addColor = useThemeStore((state) => state.addColor);
   const updateColorTheme = useThemeStore((state) => state.updateColorTheme);
@@ -190,20 +198,37 @@ export const ColorsPane = () => {
             </div>
           </div>
 
+          {/* Severity COLORS */}
           <div className={classes.group}>
             <div className={classes.groupHeader}>
               <Heading data-size="2xs">Severity</Heading>
+              <Switch
+                aria-labelledby=""
+                data-color="neutral"
+                data-size="sm"
+                checked={showSeverityColors}
+                onChange={(e) => setShowSeverityColors(e.target.checked)}
+              />
             </div>
-            <div className={classes.colors}>
-              {colors.severity.map((colorTheme, index) => (
-                <ColorInput
-                  key={index}
-                  color={colorTheme.colors.light[11].hex}
-                  name={colorTheme.name}
-                  onClick={() => setupEditState(colorTheme, index, "severity")}
-                />
-              ))}
-            </div>
+            {!showSeverityColors && (
+              <div className={classes.severityInfo}>
+                Aktiver for å overstyre severity-farger
+              </div>
+            )}
+            {showSeverityColors && (
+              <div className={classes.colors}>
+                {colors.severity.map((colorTheme, index) => (
+                  <ColorInput
+                    key={index}
+                    color={colorTheme.colors.light[11].hex}
+                    name={colorTheme.name}
+                    onClick={() =>
+                      setupEditState(colorTheme, index, "severity")
+                    }
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </>
       )}

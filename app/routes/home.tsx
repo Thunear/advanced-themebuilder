@@ -1,4 +1,12 @@
-import { Header, TopBar, Toolbar, Sidebar, Colors, Footer } from "~/components";
+import {
+  Header,
+  TopBar,
+  Toolbar,
+  Sidebar,
+  Colors,
+  Footer,
+  ColorPreview,
+} from "~/components";
 import type { Route } from "./+types/home";
 import classes from "./home.module.css";
 import clsx from "clsx/lite";
@@ -26,6 +34,7 @@ export default function Home() {
           <div className={classes.main}>
             <Toolbar />
             <Colors />
+            <ColorPreview />
           </div>
           <div className={clsx(classes.aside, shrinkSidebar && classes.shrink)}>
             <Sidebar />

@@ -76,6 +76,33 @@
   cursor: pointer;
 }
 
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ds-color-accent-base-contrast-default);
+  height: 66px;
+  gap: 12px;
+  margin-top: 24px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  background-size: 450% 100%;
+  background-image: linear-gradient(
+    to right,
+    var(--ds-color-accent-base-default),
+    var(--ds-color-brand3-base-default),
+    var(--ds-color-accent-base-default),
+    var(--ds-color-brand3-base-default)
+  );
+}
+
+.btn svg {
+  font-size: 1.7em;
+}
+
 @media screen and (max-width: 1500px) {
   .sidebar {
     display: none;

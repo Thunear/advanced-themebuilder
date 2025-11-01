@@ -12,6 +12,6 @@
 
 .active {
   outline: 3px dashed rgb(87, 87, 87);
-  outline-offset: 8px;
+  outline-offset: 7px;
   border-radius: 1px;
 }

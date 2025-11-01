@@ -1,11 +1,7 @@
 import {
   Button,
-  Field,
   Heading,
-  Label,
-  Link,
   Paragraph,
-  Select,
   ToggleGroup,
 } from "@digdir/designsystemet-react";
 import {
@@ -16,10 +12,11 @@ import {
 } from "../../../colors";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { type ColorTheme, useThemeStore } from "../../../store";
-import { SaturationRadio, Slider } from "../../components";
+import { ColorThemeSwitcher, SaturationRadio, Slider } from "../../components";
 import classes from "./SaturationPane.module.css";
 import { useEffect, useState } from "react";
 import chroma from "chroma-js";
+import cl from "clsx/lite";
 
 type SaturationPaneProps = {
   onBackClicked: () => void;
@@ -55,8 +52,8 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
   });
 
   const test = () => {
-    const color = activeColorTheme.colorTheme.colors.light[11].hex;
-    const lightnessValues = [30, 50, 70];
+    const activeColor = activeColorTheme.colorTheme.colors.light[11].hex;
+    const lightnessValues = [90, 50, 25];
     const arr = ["#ffffff", "#000000", "#ff0000"];
 
     const updatedGradientColors = { ...gradientColors };
@@ -66,7 +63,7 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
         const value = gradientColors[key as keyof typeof gradientColors];
         updatedGradientColors[key as keyof typeof gradientColors] = value.map(
           (color, i) =>
-            chroma(color)
+            chroma(activeColor)
               .luminance(
                 getLuminanceFromLightness(lightnessValues[i]),
                 key as InterpolationMode
@@ -78,6 +75,10 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
 
     setGradientColors(updatedGradientColors);
   };
+
+  useEffect(() => {
+    test();
+  }, [activeColorTheme, internalColorScheme]);
 
   const handleSaturationChange = (value: number, type: string) => {
     const colorTheme = getColorTheme(
@@ -143,33 +144,52 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
 
   return (
     <div>
-      <Button
-        data-size="sm"
-        variant="tertiary"
-        onClick={() => {
-          onBackClicked();
-        }}
-        className={classes.back}
-      >
-        <ChevronLeftIcon aria-hidden fontSize="1.5rem" /> Avansert
-        fargeinnstillinger
-      </Button>
-      <div className={classes.preview}>
-        <div
-          className={classes.color}
-          style={{
-            backgroundColor: activeColorTheme.colorTheme.colors.light[11].hex,
+      <div className={classes.header}>
+        <Button
+          data-size="sm"
+          variant="tertiary"
+          onClick={() => {
+            onBackClicked();
           }}
-        ></div>
-        <div className={classes.colorName}>
-          {activeColorTheme.colorTheme.name}
-        </div>
+          className={classes.back}
+        >
+          <ChevronLeftIcon aria-hidden fontSize="1.5rem" /> Avanserte
+          fargeinnstillinger
+        </Button>
+
+        <ColorThemeSwitcher />
       </div>
+
       <Heading data-size="xs" className={classes.heading}>
         Fargemetning
       </Heading>
+      <Paragraph data-size="sm">
+        Her kan du justere fargemetningen for de ulike fargene i temaet ditt.
+      </Paragraph>
 
-      <Heading data-size="2xs">Fargemetning</Heading>
+      <ToggleGroup
+        value={internalColorScheme}
+        name="toggle-group-nuts"
+        data-size="sm"
+        data-color="neutral"
+        data-variant="secondary"
+        className={classes.toggleGroup}
+        onChange={(value) => {
+          setInternalColorScheme(value as "light" | "dark");
+        }}
+      >
+        <ToggleGroup.Item value="light">Lys modus</ToggleGroup.Item>
+        <ToggleGroup.Item value="dark">Mørk modus</ToggleGroup.Item>
+      </ToggleGroup>
+
+      <Heading data-size="2xs" className={classes.subHeading}>
+        Fargeblandingsrom
+      </Heading>
+
+      <Paragraph data-size="sm">
+        Velg hvilket fargerom som skal brukes til å blande mellom fargene i
+        skalaen. Dette påvirker hvordan nyanser endrer seg mellom fargestegene.
+      </Paragraph>
 
       <div className={classes.saturationRadios}>
         <SaturationRadio
@@ -211,25 +231,11 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
       </div>
 
       <Heading data-size="2xs" className={classes.subHeading}>
-        Fargemetning for hver av farge-gruppene
+        Finjustering av fargemetning
       </Heading>
 
-      <ToggleGroup
-        value={internalColorScheme}
-        name="toggle-group-nuts"
-        data-size="sm"
-        data-color="neutral"
-        data-variant="secondary"
-        className="subtle-toggle-group"
-        onChange={(value) => {
-          setInternalColorScheme(value as "light" | "dark");
-        }}
-      >
-        <ToggleGroup.Item value="light">Lys modus</ToggleGroup.Item>
-        <ToggleGroup.Item value="dark">Mørk modus</ToggleGroup.Item>
-      </ToggleGroup>
-
       <div className={classes.group}>
+        <div className={cl(classes.pop)}></div>
         <Slider
           label="Background fargene"
           min={-50}
@@ -245,6 +251,7 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
           onChange={(value) => {
             handleSaturationChange(value, "background");
           }}
+          onMouseDown={() => {}}
         />
         <Slider
           label="Surface fargene"

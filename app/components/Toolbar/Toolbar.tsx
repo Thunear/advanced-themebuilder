@@ -15,7 +15,7 @@ export function Toolbar() {
 
   return (
     <div className={classes.toolbar}>
-      <div className={classes.left}>Tool</div>
+      <div className={classes.left}>Toolbar</div>
       <div className={classes.right}>
         <ToggleGroup
           value={internalColorScheme}

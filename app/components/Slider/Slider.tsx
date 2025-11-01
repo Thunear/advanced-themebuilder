@@ -1,6 +1,6 @@
-import { ArrowsCirclepathIcon } from '@navikt/aksel-icons';
-import cl from 'clsx/lite';
-import classes from './Slider.module.css';
+import { ArrowsCirclepathIcon } from "@navikt/aksel-icons";
+import cl from "clsx/lite";
+import classes from "./Slider.module.css";
 
 type SliderProps = {
   label: string;
@@ -10,6 +10,8 @@ type SliderProps = {
   initialValue: number;
   onChange?: (value: number) => void;
   onReset?: (value: number) => void;
+  onMouseDown?: () => void;
+  onMouseUp?: () => void;
 };
 
 export const Slider = ({
@@ -20,11 +22,13 @@ export const Slider = ({
   initialValue,
   onChange,
   onReset,
+  onMouseDown,
+  onMouseUp,
 }: SliderProps) => {
   const handleChange = (value: string | number) => {
     if (onChange) {
-      const parsedValue = value === '-' ? '-' : Number(value);
-      if (!Number.isNaN(parsedValue) || value === '-') {
+      const parsedValue = value === "-" ? "-" : Number(value);
+      if (!Number.isNaN(parsedValue) || value === "-") {
         onChange(parsedValue as number);
       }
     }
@@ -45,11 +49,13 @@ export const Slider = ({
         <div className={classes.slider}>
           <input
             className={classes.range}
-            type='range'
+            type="range"
             min={min}
             max={max}
             value={value}
             onChange={(e) => handleChange(Number(e.target.value))}
+            onMouseDown={onMouseDown}
+            onMouseUp={onMouseUp}
           />
           <div className={classes.rangeLabels}>
             <div>{min}%</div>
@@ -62,17 +68,17 @@ export const Slider = ({
           <input
             className={cl(
               classes.valueInput,
-              value !== initialValue ? classes.activeInput : '',
+              value !== initialValue ? classes.activeInput : ""
             )}
-            data-size='sm'
-            type='text'
+            data-size="sm"
+            type="text"
             value={value}
             onChange={(e) => handleChange(Number(e.target.value))}
           />
           <button
             className={cl(
               classes.resetBtn,
-              value === initialValue ? classes.hidden : '',
+              value === initialValue ? classes.hidden : ""
             )}
             onClick={handleReset}
           >

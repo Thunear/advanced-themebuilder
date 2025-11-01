@@ -10,7 +10,7 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import "@digdir/designsystemet-css/index.css";
-import "@digdir/designsystemet-theme";
+import "@digdir/designsystemet-theme/digdir.css";
 import "react-color-palette/css";
 
 export const links: Route.LinksFunction = () => [

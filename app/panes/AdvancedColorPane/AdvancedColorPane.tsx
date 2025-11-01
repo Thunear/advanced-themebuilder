@@ -1,26 +1,11 @@
-import {
-  Button,
-  Dropdown,
-  Heading,
-  ToggleGroup,
-} from "@digdir/designsystemet-react";
-import {
-  type CssColor,
-  generateColorSchemes,
-  getBaseDarkLightness,
-} from "../../../colors";
-import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronUpIcon,
-  PaletteIcon,
-} from "@navikt/aksel-icons";
+import { Button, Heading, ToggleGroup } from "@digdir/designsystemet-react";
+import { generateColorSchemes, getBaseDarkLightness } from "../../../colors";
+import { ChevronLeftIcon, PaletteIcon } from "@navikt/aksel-icons";
 import { useEffect, useState } from "react";
 import { useThemeStore } from "../../../store";
-import { LightnessInput } from "../../components";
+import { ColorThemeSwitcher, LightnessInput } from "../../components";
 import { SaturationPane } from "../SaturationPane/SaturationPane";
 import classes from "./AdvancedColorPane.module.css";
-import { ColorService } from "react-color-palette";
 
 type AdvancedColorPaneProps = {
   onBackClicked: () => void;
@@ -35,7 +20,6 @@ export const AdvancedColorPane = ({
   const setInternalColorScheme = useThemeStore(
     (state) => state.setInternalColorScheme
   );
-  const getColorTheme = useThemeStore((state) => state.getColorTheme);
   const [saturationPage, setSaturationPage] = useState(false);
   const activeColorTheme = useThemeStore((state) => state.activeColorTheme);
   const setActiveColorTheme = useThemeStore(
@@ -43,8 +27,6 @@ export const AdvancedColorPane = ({
   );
   const updateColorTheme = useThemeStore((state) => state.updateColorTheme);
   const [baseDarkLightness, setBaseDarkLightness] = useState(-1);
-  const colors = useThemeStore((state) => state.colors);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleStepChange = (value: number) => {
     if (activeColorTheme) {
@@ -96,80 +78,7 @@ export const AdvancedColorPane = ({
               <ChevronLeftIcon aria-hidden fontSize="1.5rem" /> Gå tilbake
             </Button>
 
-            <Dropdown.TriggerContext>
-              <Dropdown.Trigger
-                data-size="sm"
-                data-color="neutral"
-                variant="tertiary"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-                className={classes.dropdown}
-              >
-                <div
-                  className={classes.color}
-                  style={{
-                    backgroundColor:
-                      activeColorTheme.colorTheme.colors.light[11].hex,
-                  }}
-                ></div>
-                <div className={classes.colorName}>
-                  {activeColorTheme.colorTheme.name}
-                </div>
-                {dropdownOpen ? (
-                  <ChevronUpIcon aria-hidden />
-                ) : (
-                  <ChevronDownIcon aria-hidden />
-                )}
-              </Dropdown.Trigger>
-              <Dropdown
-                data-size="sm"
-                data-color="neutral"
-                open={dropdownOpen}
-                onClose={() => setDropdownOpen(false)}
-              >
-                <Dropdown.List>
-                  <Dropdown.Item>
-                    {colors.main.map((colorTheme, index) => (
-                      <Dropdown.Button
-                        onClick={() => {
-                          setActiveColorTheme(
-                            index,
-                            "main",
-                            colorTheme,
-                            ColorService.convert(
-                              "hex",
-                              colorTheme.colors.light[11].hex
-                            )
-                          );
-                          setDropdownOpen(false);
-                        }}
-                        key={index}
-                      >
-                        {colorTheme.name}
-                      </Dropdown.Button>
-                    ))}
-                    {colors.support.map((colorTheme, index) => (
-                      <Dropdown.Button
-                        onClick={() => {
-                          setActiveColorTheme(
-                            index,
-                            "support",
-                            colorTheme,
-                            ColorService.convert(
-                              "hex",
-                              colorTheme.colors.light[11].hex
-                            )
-                          );
-                          setDropdownOpen(false);
-                        }}
-                        key={index}
-                      >
-                        {colorTheme.name}
-                      </Dropdown.Button>
-                    ))}
-                  </Dropdown.Item>
-                </Dropdown.List>
-              </Dropdown>
-            </Dropdown.TriggerContext>
+            <ColorThemeSwitcher />
           </div>
 
           <Heading data-size="xs" className={classes.heading}>
