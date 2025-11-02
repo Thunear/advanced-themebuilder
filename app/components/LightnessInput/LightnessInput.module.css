@@ -71,6 +71,15 @@
   margin-right: -12px;
 }
 
+.minusBtn svg,
+.plusBtn svg {
+  font-size: 1.4em;
+}
+
+.minusBtn {
+  margin-left: 4px;
+}
+
 .inputContainer {
   position: relative;
 }

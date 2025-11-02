@@ -4,14 +4,13 @@ import { useEffect, useState } from "react";
 import { useThemeStore } from "../../../store";
 
 import {
-  Button,
   Dialog,
   Heading,
   Tabs,
   useMediaQuery,
 } from "@digdir/designsystemet-react";
 import { CogIcon, RocketIcon } from "@navikt/aksel-icons";
-import { BorderRadiusInput } from "../BorderRadiusInput/BorderRadiusInput";
+import { RadiusPane } from "../../panes/RadiusPane/RadiusPane";
 import { ColorsPane, FrontPane } from "../../panes";
 import classes from "./Sidebar.module.css";
 
@@ -24,7 +23,6 @@ export const Sidebar = () => {
 
   const [isSticky, setSticky] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
-  const [showLightnessPage, setShowLightnessPage] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,6 +60,7 @@ export const Sidebar = () => {
           )}
         >
           {activePane === "front" && <FrontPane />}
+          {activePane === "radius" && <RadiusPane />}
           {activePane.startsWith("colors") && <ColorsPane />}
           {activePane === "front" && (
             <button
@@ -89,20 +88,15 @@ export const Sidebar = () => {
           <Dialog.Block className={classes.tabsWrapper}>
             <Tabs
               value={activePane}
-              onChange={(value) =>
-                setActivePane(value as "colors" | "dimensions")
-              }
+              onChange={(value) => setActivePane(value as "colors" | "radius")}
             >
               <Tabs.List>
                 <Tabs.Tab value="colors">Farger</Tabs.Tab>
-                <Tabs.Tab value="dimensions">Dimensjoner</Tabs.Tab>
+                <Tabs.Tab value="radius">Radius</Tabs.Tab>
               </Tabs.List>
 
               <Tabs.Panel className={classes.tabPanel} value="colors">
                 <ColorsPane />
-              </Tabs.Panel>
-              <Tabs.Panel className={classes.tabPanel} value="dimensions">
-                <BorderRadiusInput />
               </Tabs.Panel>
             </Tabs>
           </Dialog.Block>

@@ -48,3 +48,10 @@
 .heading {
   margin-bottom: 0.75em;
 }
+
+.back {
+  align-self: flex-start;
+  margin-left: -16px;
+  margin-top: -10px;
+  margin-bottom: 4px;
+}

@@ -24,9 +24,8 @@ export type PaneType =
   | "colors/edit"
   | "colors/advanced"
   | "colors/lightness"
-  | "dimensions"
-  | "advancedColors"
-  | "lightness";
+  | "radius"
+  | "advancedColors";
 
 type ColorStore = {
   shrinkSidebar: boolean;

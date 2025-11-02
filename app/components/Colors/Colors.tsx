@@ -4,6 +4,14 @@ import classes from "./Colors.module.css";
 import { Divider } from "@digdir/designsystemet-react";
 import { ColorHeadings } from "../ColorHeadings/ColorHeadings";
 import { SectionText } from "../SectionText/SectionText";
+import {
+  generateColorSchemes,
+  getBaseDarkLightness,
+  type ColorMetadataByName,
+  type CssColor,
+  type ThemeInfo,
+} from "colors";
+import { useEffect } from "react";
 
 export const Colors = () => {
   const colors = useThemeStore((state) => state.colors);
@@ -11,6 +19,76 @@ export const Colors = () => {
     (state) => state.internalColorScheme
   );
   const showSeverityColors = useThemeStore((state) => state.showSeverityColors);
+  const onColorThemeChange = useThemeStore((state) => state.onColorThemeChange);
+  const updateColorTheme = useThemeStore((state) => state.updateColorTheme);
+
+  useEffect(() => {
+    const updatedMainColors = colors.main.map((color) => {
+      color.colorMetadata["base-default"].lightness.dark = getBaseDarkLightness(
+        color.colors.light[11].hex as CssColor
+      );
+      const updatedColors = generateColorSchemes(
+        color.colors.light[11].hex,
+        color.colorMetadata
+      );
+      return {
+        name: color.name,
+        colors: updatedColors,
+        colorMetadata: color.colorMetadata,
+      };
+    });
+
+    const updatedNeutralColors = colors.neutral.map((color) => {
+      const updatedColors = generateColorSchemes(
+        color.colors.light[11].hex,
+        color.colorMetadata
+      );
+      return {
+        name: color.name,
+        colors: updatedColors,
+        colorMetadata: color.colorMetadata,
+      };
+    });
+
+    const updatedSupportColors = colors.support.map((color) => {
+      const updatedColors = generateColorSchemes(
+        color.colors.light[11].hex,
+        color.colorMetadata
+      );
+      return {
+        name: color.name,
+        colors: updatedColors,
+        colorMetadata: color.colorMetadata,
+      };
+    });
+
+    const updatedSeverityColors = colors.severity.map((color) => {
+      const updatedColors = generateColorSchemes(
+        color.colors.light[11].hex,
+        color.colorMetadata
+      );
+      return {
+        name: color.name,
+        colors: updatedColors,
+        colorMetadata: color.colorMetadata,
+      };
+    });
+
+    updatedMainColors.forEach((colorTheme, index) => {
+      updateColorTheme(colorTheme, index, "main");
+    });
+
+    updatedNeutralColors.forEach((colorTheme, index) => {
+      updateColorTheme(colorTheme, index, "neutral");
+    });
+
+    updatedSupportColors.forEach((colorTheme, index) => {
+      updateColorTheme(colorTheme, index, "support");
+    });
+    updatedSeverityColors.forEach((colorTheme, index) => {
+      updateColorTheme(colorTheme, index, "severity");
+    });
+  }, [onColorThemeChange]);
 
   return (
     <div>

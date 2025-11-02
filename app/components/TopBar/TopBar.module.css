@@ -1,6 +1,6 @@
 .header {
-  height: 80px;
-  background-color: var(--ds-color-neutral-background-default);
+  height: 76px;
+  background-color: var(--ds-color-neutral-surface-default);
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--ds-color-neutral-border-subtle);

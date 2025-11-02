@@ -29,6 +29,7 @@ export const ColorRow = ({
         classes.themes,
         activeColorTheme.colorTheme.name === namespace &&
           activePane.startsWith("colors/") &&
+          activePane !== "colors/lightness" &&
           classes.active
       )}
     >

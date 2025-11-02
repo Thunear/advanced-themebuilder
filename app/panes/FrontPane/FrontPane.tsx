@@ -51,9 +51,9 @@ export const FrontPane = () => {
           icon={<PaletteIcon title="a11y-title" fontSize="1.5rem" />}
         />
         <Card
+          onClick={() => setActivePane("radius")}
           title="Border-radius"
           icon={<PlateIcon title="a11y-title" fontSize="1.5rem" />}
-          blurry
         />
         <Card
           title="Typografi"

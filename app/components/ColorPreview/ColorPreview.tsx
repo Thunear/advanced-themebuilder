@@ -47,6 +47,7 @@ export const ColorPreview = () => {
           classes.card,
           activeColorTheme.colorTheme.name === color.name &&
             activePane.startsWith("colors/") &&
+            activePane !== "colors/lightness" &&
             classes.activeCard
         )}
       >
@@ -134,12 +135,11 @@ export const ColorPreview = () => {
         </div>
       </div>
 
-      <div className={classes.section}>
+      <div className={classes.section} data-color-scheme={internalColorScheme}>
         <Heading className={classes.title} data-size="xs">
           Main, neutral og support
         </Heading>
         <div
-          data-color-scheme={internalColorScheme}
           className={cl(
             classes.cards,
             view === "grid" ? classes.grid : classes.list
@@ -160,7 +160,6 @@ export const ColorPreview = () => {
         </Heading>
 
         <div
-          data-color-scheme={internalColorScheme}
           className={cl(
             classes.cards,
             view === "grid" ? classes.grid : classes.list

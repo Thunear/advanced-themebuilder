@@ -1,8 +1,8 @@
-import { Button, Input } from '@digdir/designsystemet-react';
-import { ArrowsCirclepathIcon, MinusIcon, PlusIcon } from '@navikt/aksel-icons';
-import cl from 'clsx/lite';
-import { useEffect, useRef, useState } from 'react';
-import classes from './LightnessInput.module.css';
+import { Button, Input } from "@digdir/designsystemet-react";
+import { ArrowsCirclepathIcon, MinusIcon, PlusIcon } from "@navikt/aksel-icons";
+import cl from "clsx/lite";
+import { useEffect, useRef, useState } from "react";
+import classes from "./LightnessInput.module.css";
 
 type LightnessInputProps = {
   label: string;
@@ -52,7 +52,7 @@ export const LightnessInput = ({
       <div
         className={cl(
           classes.labelContainer,
-          oneLiner && classes.labelContainerOneLiner,
+          oneLiner && classes.labelContainerOneLiner
         )}
       >
         <div className={classes.label}>{label}</div>
@@ -60,28 +60,28 @@ export const LightnessInput = ({
           <div
             className={cl(
               classes.description,
-              oneLiner && classes.oneLinerDescription,
+              oneLiner && classes.oneLinerDescription
             )}
           >
             {description}
           </div>
         )}
       </div>
-      <div data-size='sm' className={classes.inputRow}>
+      <div data-size="sm" className={classes.inputRow}>
         <div className={classes.inputContainer}>
           <Input
-            data-size='sm'
+            data-size="sm"
             value={currentValue}
             onChange={(e) => handleChange(Number(e.target.value))}
             className={cl(
               classes.input,
-              isActiveRef.current && classes.activeInput,
+              isActiveRef.current && classes.activeInput
             )}
           />
           <button
             className={cl(
               classes.resetBtn,
-              !isActiveRef.current && classes.hidden,
+              !isActiveRef.current && classes.hidden
             )}
             onClick={handleReset}
           >
@@ -90,24 +90,26 @@ export const LightnessInput = ({
         </div>
 
         <Button
-          variant='tertiary'
-          data-color='neutral'
+          variant="tertiary"
+          data-color="neutral"
           className={classes.minusBtn}
+          data-icon={true}
           onClick={() => {
             handleChange(currentValue - 1);
           }}
         >
-          <MinusIcon title='a11y-title' fontSize='1.5rem' />
+          <MinusIcon title="a11y-title" fontSize="1.5rem" />
         </Button>
         <Button
-          variant='tertiary'
-          data-color='neutral'
+          variant="tertiary"
+          data-color="neutral"
+          data-icon={true}
           className={classes.plusBtn}
           onClick={() => {
             handleChange(currentValue + 1);
           }}
         >
-          <PlusIcon title='a11y-title' fontSize='1.5rem' />
+          <PlusIcon title="a11y-title" fontSize="1.5rem" />
         </Button>
       </div>
     </div>

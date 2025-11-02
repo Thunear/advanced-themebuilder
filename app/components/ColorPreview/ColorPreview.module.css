@@ -37,7 +37,7 @@
 }
 
 .activeCard {
-  outline: 3px dashed rgb(87, 87, 87);
+  outline: 3px dashed var(--ds-color-neutral-border-default);
   outline-offset: 6px;
   border-radius: 1px;
 }

@@ -6,6 +6,8 @@ import {
   Colors,
   Footer,
   ColorPreview,
+  ColorDetail,
+  ColorContrasts,
 } from "~/components";
 import type { Route } from "./+types/home";
 import classes from "./home.module.css";
@@ -14,8 +16,8 @@ import { useThemeStore } from "store";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Temabygger Prototype" },
+    { name: "description", content: "Temabygger Prototype" },
   ];
 }
 
@@ -24,6 +26,7 @@ export default function Home() {
   const externalColorScheme = useThemeStore(
     (state) => state.externalColorScheme
   );
+  const themeTab = useThemeStore((state) => state.themeTab);
 
   return (
     <div data-color-scheme={externalColorScheme} className={classes.app}>
@@ -33,8 +36,18 @@ export default function Home() {
         <div className={classes.content}>
           <div className={classes.main}>
             <Toolbar />
-            <Colors />
-            <ColorPreview />
+            {themeTab === "colorsystem" && (
+              <>
+                <Colors />
+                <ColorPreview />
+                <ColorDetail />
+              </>
+            )}
+            {themeTab === "contrast" && (
+              <>
+                <ColorContrasts />
+              </>
+            )}
           </div>
           <div className={clsx(classes.aside, shrinkSidebar && classes.shrink)}>
             <Sidebar />

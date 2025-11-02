@@ -154,7 +154,7 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
           className={classes.back}
         >
           <ChevronLeftIcon aria-hidden fontSize="1.5rem" /> Avanserte
-          fargeinnstillinger
+          innstillinger
         </Button>
 
         <ColorThemeSwitcher />

@@ -103,7 +103,7 @@ export const ColorsPane = () => {
               variant="tertiary"
               data-size="sm"
               data-color="neutral"
-              onClick={() => setActivePane("lightness")}
+              onClick={() => setActivePane("colors/lightness")}
             >
               <CogIcon title="tannhjul" fontSize="1.6rem" />
               Globale innstillinger
@@ -233,37 +233,38 @@ export const ColorsPane = () => {
         </>
       )}
 
-      {activePane === "lightness" && (
+      {activePane === "colors/lightness" && (
         <LightnessPane onBackClicked={() => setActivePane("colors")} />
       )}
 
-      {activePane.startsWith("colors/") && (
-        <ColorPane
-          type={activePane}
-          onClose={() => {
-            resetColorState();
-          }}
-          onRemove={() => {
-            removeColor(activeColorTheme.index, activeColorTheme.type);
-            resetColorState();
-          }}
-          onCancel={() => {
-            resetColorState();
-            updateColorTheme(
-              {
-                name: initialName,
-                colors: generateColorSchemes(
-                  initialColor as CssColor,
-                  colorMetadata
-                ),
-                colorMetadata,
-              },
-              activeColorTheme.index,
-              activeColorTheme.type
-            );
-          }}
-        />
-      )}
+      {activePane.startsWith("colors/") &&
+        activePane !== "colors/lightness" && (
+          <ColorPane
+            type={activePane}
+            onClose={() => {
+              resetColorState();
+            }}
+            onRemove={() => {
+              removeColor(activeColorTheme.index, activeColorTheme.type);
+              resetColorState();
+            }}
+            onCancel={() => {
+              resetColorState();
+              updateColorTheme(
+                {
+                  name: initialName,
+                  colors: generateColorSchemes(
+                    initialColor as CssColor,
+                    colorMetadata
+                  ),
+                  colorMetadata,
+                },
+                activeColorTheme.index,
+                activeColorTheme.type
+              );
+            }}
+          />
+        )}
     </div>
   );
 };

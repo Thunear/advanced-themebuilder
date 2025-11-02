@@ -22,6 +22,8 @@
   position: fixed;
   top: 24px;
   width: 441px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
 }
 
 .tabContent {

@@ -23,12 +23,12 @@
 .back {
   margin-left: -16px;
   align-self: flex-start;
-  margin-top: -8px;
+  margin-top: -10px;
   margin-bottom: 16px;
 }
 
 .luminance {
-  margin-top: 16px;
+  margin-top: 12px;
 }
 
 .btnGroup {
@@ -42,10 +42,21 @@
   margin-bottom: 8px;
 }
 
+.subHeading {
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+
 .activeBtn {
   background-color: var(--ds-color-surface-hover);
 }
 
 .description {
   margin-bottom: 16px;
+}
+
+.presets {
+  display: flex;
+  gap: var(--ds-size-4);
+  flex-wrap: wrap;
 }
