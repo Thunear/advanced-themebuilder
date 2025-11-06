@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "react-router build",
-    "dev": "react-router dev",
-    "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "build": "vite build",
+    "dev": "vite dev",
+    "start": "vite serve ./build/server/index.js",
+    "typecheck": "vite typegen && tsc"
   },
   "dependencies": {
     "@digdir/designsystemet-css": "^1.7.1",
