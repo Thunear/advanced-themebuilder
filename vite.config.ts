@@ -13,5 +13,4 @@ export default defineConfig({
     netlifyReactRouter(),
     netlify(),
   ],
-  build: { outDir: "dist", emptyOutDir: true },
 });
