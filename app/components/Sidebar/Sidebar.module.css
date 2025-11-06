@@ -21,7 +21,7 @@
 .sticky {
   position: fixed;
   top: 24px;
-  width: 441px;
+  width: 450px;
   max-height: calc(100vh - 48px);
   overflow-y: auto;
 }
@@ -44,15 +44,6 @@
   right: 12px;
   bottom: 12px;
   position: fixed;
-}
-
-.bottom {
-  border-top: 1px solid var(--ds-color-neutral-border-subtle);
-  flex-shrink: 0;
-  bottom: 16px;
-  right: 28px;
-  margin-top: 24px;
-  padding-top: 32px;
 }
 
 .appearance {
@@ -78,16 +69,25 @@
   cursor: pointer;
 }
 
+.btnGroup {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
 .btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
+  height: 60px;
   color: var(--ds-color-accent-base-contrast-default);
-  height: 66px;
-  gap: 12px;
-  margin-top: 24px;
+  width: calc(50% - 8px);
+  gap: 7px;
+  padding-right: 15px;
+  margin-top: 28px;
   border-radius: 4px;
   outline: none;
   border: none;
@@ -102,7 +102,14 @@
 }
 
 .btn svg {
-  font-size: 1.7em;
+  font-size: 1.5em;
+}
+
+.secondaryBtn {
+  background-color: var(--ds-color-neutral-background-subtle);
+  color: var(--ds-color-neutral-text-secondary);
+  background-image: none;
+  border: 1px solid var(--ds-color-neutral-border-default);
 }
 
 @media screen and (max-width: 1500px) {

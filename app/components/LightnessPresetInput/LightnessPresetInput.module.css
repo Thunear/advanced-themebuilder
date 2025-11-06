@@ -3,6 +3,7 @@
   border-radius: 4px;
   padding: 12px;
   flex-basis: calc(50% - 8px);
+  background-color: var(--ds-color-neutral-background-tinted);
 }
 
 .box:hover {
@@ -12,6 +13,7 @@
 
 .activeBox {
   outline: 1px solid var(--ds-color-neutral-border-default);
+  background-color: var(--ds-color-neutral-background-default);
 }
 
 .title {
@@ -21,7 +23,55 @@
   line-height: 1.2em;
 }
 
-.gradient {
+.colors {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.group {
+  display: flex;
+  border-radius: 2px;
+}
+
+.color {
   height: 16px;
-  border-radius: 4px;
+  width: 16px;
+  background-color: white;
+}
+
+.d-aa .surfaceTinted {
+  background-color: blue;
+}
+
+.n-aa .surfaceTinted {
+  background-color: #e8e8e8;
+}
+
+.n-aa .surfaceHover {
+  background-color: #dadada;
+}
+
+.n-aa .surfaceActive {
+  background-color: #cccccc;
+}
+
+.n-aa .borderSubtle {
+  background-color: #bbbbbb;
+}
+
+.n-aa .borderDefault {
+  background-color: #777777;
+}
+
+.n-aa .borderStrong {
+  background-color: #5e5e5e;
+}
+
+.n-aa .textSubtle {
+  background-color: #5b5d60;
+}
+
+.n-aa .textDefault {
+  background-color: #292c30;
 }

@@ -1,28 +1,38 @@
-export type ColorScheme = 'light' | 'dark' | 'contrast';
-export type ContrastMode = 'aa' | 'aaa';
+export type ColorScheme = "light" | "dark";
+export type ContrastMode = "aa" | "aaa";
 export type ColorNumber = SemanticColorNumberMap[keyof SemanticColorNumberMap];
 export type ColorNames = keyof SemanticColorNumberMap;
-export type GlobalColors = 'red' | 'blue' | 'green' | 'orange' | 'purple';
-export type ColorError = 'none' | 'decorative' | 'interaction';
-export type InterpolationMode = 'hcl' | 'hsi' | 'hsl' | 'hsv' | 'lab' | 'lch' | 'lrgb' | 'oklab' | 'oklch' | 'rgb';
+export type GlobalColors = "red" | "blue" | "green" | "orange" | "purple";
+export type ColorError = "none" | "decorative" | "interaction";
+export type InterpolationMode =
+  | "hcl"
+  | "hsi"
+  | "hsl"
+  | "hsv"
+  | "lab"
+  | "lch"
+  | "lrgb"
+  | "oklab"
+  | "oklch"
+  | "rgb";
 
 type SemanticColorNumberMap = {
-  'background-default': 1;
-  'background-tinted': 2;
-  'surface-default': 3;
-  'surface-tinted': 4;
-  'surface-hover': 5;
-  'surface-active': 6;
-  'border-subtle': 7;
-  'border-default': 8;
-  'border-strong': 9;
-  'text-subtle': 10;
-  'text-default': 11;
-  'base-default': 12;
-  'base-hover': 13;
-  'base-active': 14;
-  'base-contrast-subtle': 15;
-  'base-contrast-default': 16;
+  "background-default": 1;
+  "background-tinted": 2;
+  "surface-default": 3;
+  "surface-tinted": 4;
+  "surface-hover": 5;
+  "surface-active": 6;
+  "border-subtle": 7;
+  "border-default": 8;
+  "border-strong": 9;
+  "text-subtle": 10;
+  "text-default": 11;
+  "base-default": 12;
+  "base-hover": 13;
+  "base-active": 14;
+  "base-contrast-subtle": 15;
+  "base-contrast-default": 16;
 };
 
 type SemanticColorMapping = {

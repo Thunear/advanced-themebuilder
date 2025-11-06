@@ -28,6 +28,10 @@ export type PaneType =
   | "advancedColors";
 
 type ColorStore = {
+  activeLightPreset: string;
+  setActiveLightPreset: (preset: string) => void;
+  activeDarkPreset: string;
+  setActiveDarkPreset: (preset: string) => void;
   shrinkSidebar: boolean;
   setShrinkSidebar: (shrink: boolean) => void;
   showSeverityColors: boolean;
@@ -95,6 +99,10 @@ type ColorStore = {
 
 export const useThemeStore = create(
   subscribeWithSelector<ColorStore>((set) => ({
+    activeLightPreset: "aa",
+    setActiveLightPreset: (preset) => set({ activeLightPreset: preset }),
+    activeDarkPreset: "s-aa",
+    setActiveDarkPreset: (preset) => set({ activeDarkPreset: preset }),
     activeColorTheme: {
       index: 0,
       type: "main",

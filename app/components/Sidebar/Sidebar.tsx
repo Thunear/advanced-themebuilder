@@ -63,15 +63,26 @@ export const Sidebar = () => {
           {activePane === "radius" && <RadiusPane />}
           {activePane.startsWith("colors") && <ColorsPane />}
           {activePane === "front" && (
-            <button
-              className={classes.btn}
-              onClick={() => {
-                setActivePane("front");
-              }}
-            >
-              <RocketIcon title="a11y-title" fontSize="1.5rem" />
-              Ta i bruk temaet ditt
-            </button>
+            <div className={classes.btnGroup}>
+              <button
+                className={classes.btn}
+                onClick={() => {
+                  setActivePane("front");
+                }}
+              >
+                <RocketIcon title="a11y-title" fontSize="1.5rem" />
+                Ta i bruk tema
+              </button>
+              <button
+                className={cl(classes.btn, classes.secondaryBtn)}
+                onClick={() => {
+                  setActivePane("front");
+                }}
+              >
+                <CogIcon title="a11y-title" fontSize="1.5rem" />
+                Importer config
+              </button>
+            </div>
           )}
         </div>
       </div>

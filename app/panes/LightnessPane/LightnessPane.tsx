@@ -4,11 +4,12 @@ import {
   Paragraph,
   ToggleGroup,
 } from "@digdir/designsystemet-react";
-import type { ColorMetadata } from "../../../colors";
+import { colorMetadata, type ColorMetadata } from "../../../colors";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { useThemeStore } from "../../../store";
 import { LightnessInput, LightnessPresetInput } from "../../components";
 import classes from "./LightnessPane.module.css";
+import { lightnessPresets } from "colors/lightnessPresets";
 
 type LightnessPageProps = {
   onBackClicked: () => void;
@@ -30,32 +31,67 @@ export const LightnessPane = ({ onBackClicked }: LightnessPageProps) => {
   );
   const updateColorTheme = useThemeStore((state) => state.updateColorTheme);
   const colors = useThemeStore((state) => state.colors);
+  const activeLightPreset = useThemeStore((state) => state.activeLightPreset);
+  const setActiveLightPreset = useThemeStore(
+    (state) => state.setActiveLightPreset
+  );
+  const activeDarkPreset = useThemeStore((state) => state.activeDarkPreset);
+  const setActiveDarkPreset = useThemeStore(
+    (state) => state.setActiveDarkPreset
+  );
 
-  const handleLightnessChange = (value: number, color: ColorMetadata) => {
+  const handleLightnessChange = (
+    value: number,
+    colorMetadata: ColorMetadata
+  ) => {
     colors.main.map((colorTheme, i) => {
-      colorTheme.colorMetadata[color.name].lightness[internalColorScheme] =
-        value;
+      colorTheme.colorMetadata[colorMetadata.name].lightness[
+        internalColorScheme
+      ] = value;
       updateColorTheme(colorTheme, i, "main");
     });
     colors.neutral.map((colorTheme, i) => {
-      colorTheme.colorMetadata[color.name].lightness[internalColorScheme] =
-        value;
+      colorTheme.colorMetadata[colorMetadata.name].lightness[
+        internalColorScheme
+      ] = value;
       updateColorTheme(colorTheme, i, "neutral");
     });
     colors.support.map((colorTheme, i) => {
-      colorTheme.colorMetadata[color.name].lightness[internalColorScheme] =
-        value;
+      colorTheme.colorMetadata[colorMetadata.name].lightness[
+        internalColorScheme
+      ] = value;
       updateColorTheme(colorTheme, i, "support");
     });
     colors.severity.map((colorTheme, i) => {
-      colorTheme.colorMetadata[color.name].lightness[internalColorScheme] =
-        value;
+      colorTheme.colorMetadata[colorMetadata.name].lightness[
+        internalColorScheme
+      ] = value;
       updateColorTheme(colorTheme, i, "severity");
     });
 
     setOnColorThemeChange(onColorThemeChange + 1);
   };
 
+  const handleLightnessPresetChange = (presetKey: string) => {
+    const preset = lightnessPresets[internalColorScheme][presetKey].lightness;
+
+    ["main", "neutral", "support", "severity"].forEach((category) => {
+      colors[category as keyof typeof colors].forEach((colorTheme, i) => {
+        Object.entries(preset).forEach(([colorName, lightnessValue]) => {
+          colorTheme.colorMetadata[
+            colorName as keyof typeof colorTheme.colorMetadata
+          ].lightness[internalColorScheme] = lightnessValue;
+        });
+        updateColorTheme(
+          colorTheme,
+          i,
+          category as "main" | "neutral" | "support" | "severity"
+        );
+      });
+    });
+
+    setOnColorThemeChange(onColorThemeChange + 1);
+  };
   return (
     <div className={classes.page}>
       <Button
@@ -95,10 +131,34 @@ export const LightnessPane = ({ onBackClicked }: LightnessPageProps) => {
       </Heading>
 
       <div className={classes.presets}>
-        <LightnessPresetInput title="Dimmed (AA)" />
-        <LightnessPresetInput title="Strong (AA)" />
-        <LightnessPresetInput title="Dimmed (AAA)" />
-        <LightnessPresetInput title="Strong (AAA)" />
+        {Object.keys(lightnessPresets[internalColorScheme]).map((presetKey) => {
+          return (
+            <LightnessPresetInput
+              onClick={() => {
+                handleLightnessPresetChange(presetKey);
+                if (internalColorScheme === "light") {
+                  setActiveLightPreset(presetKey as any);
+                } else {
+                  setActiveDarkPreset(presetKey as any);
+                }
+              }}
+              key={presetKey}
+              active={
+                internalColorScheme === "light"
+                  ? activeLightPreset === presetKey
+                  : activeDarkPreset === presetKey
+              }
+              colors={
+                lightnessPresets[internalColorScheme][presetKey].lightness
+              }
+              type={presetKey as "d-aa" | "s-aa" | "d-aaa" | "s-aaa"}
+              title={
+                (lightnessPresets[internalColorScheme] as any)[presetKey]
+                  ?.name || presetKey
+              }
+            />
+          );
+        })}
       </div>
 
       <Heading data-size="2xs" className={classes.subHeading}>
@@ -108,28 +168,38 @@ export const LightnessPane = ({ onBackClicked }: LightnessPageProps) => {
       <div className={classes.luminance}>
         <div className={classes.inputs}>
           {Object.values(referenceColorMetadata)
-            .filter((color) => !color.name.includes("base"))
-            .map((color, refIndex) =>
+            .filter((colorMetadata) => !colorMetadata.name.includes("base"))
+            .map((colorMetadata, refIndex) =>
               refIndex === 11 ? null : (
                 <LightnessInput
                   key={refIndex}
-                  label={color.displayName}
+                  label={colorMetadata.displayName}
                   oneLiner
                   value={
-                    colors.main[0].colorMetadata[color.name].lightness[
+                    colors.main[0].colorMetadata[colorMetadata.name].lightness[
                       internalColorScheme
                     ]
                   }
                   initialValue={
-                    referenceColorMetadata[color.name].lightness[
+                    referenceColorMetadata[colorMetadata.name].lightness[
                       internalColorScheme
                     ]
                   }
                   onChange={(value) => {
-                    handleLightnessChange(value, color);
+                    handleLightnessChange(value, colorMetadata);
+                    if (internalColorScheme === "light") {
+                      setActiveLightPreset(colorMetadata.name);
+                    } else {
+                      setActiveDarkPreset(colorMetadata.name);
+                    }
                   }}
                   onReset={(value) => {
-                    handleLightnessChange(value, color);
+                    handleLightnessChange(value, colorMetadata);
+                    if (internalColorScheme === "light") {
+                      setActiveLightPreset(colorMetadata.name);
+                    } else {
+                      setActiveDarkPreset(colorMetadata.name);
+                    }
                   }}
                 />
               )
