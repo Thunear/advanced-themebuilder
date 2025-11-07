@@ -81,14 +81,6 @@ export function Toolbar() {
           <ToggleGroup.Item value="light">Lys modus</ToggleGroup.Item>
           <ToggleGroup.Item value="dark">Mørk modus</ToggleGroup.Item>
         </ToggleGroup>
-
-        <Button
-          variant="tertiary"
-          data-color="neutral"
-          onClick={() => setShrinkSidebar(!shrinkSidebar)}
-        >
-          <ChevronRightLastIcon title="a11y-title" fontSize="2.5rem" />
-        </Button>
       </div>
     </div>
   );
