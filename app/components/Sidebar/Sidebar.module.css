@@ -104,6 +104,9 @@
 .btn svg {
   font-size: 1.5em;
 }
+.btn:hover {
+  cursor: not-allowed;
+}
 
 .secondaryBtn {
   background-color: var(--ds-color-neutral-background-subtle);

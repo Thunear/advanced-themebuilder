@@ -4,3 +4,9 @@
   border-radius: 50%;
   margin-right: 2px;
 }
+
+.active {
+  background-color: var(--ds-color-accent-surface-tinted);
+  color: var(--ds-color-accent-text-default);
+  font-weight: 500;
+}

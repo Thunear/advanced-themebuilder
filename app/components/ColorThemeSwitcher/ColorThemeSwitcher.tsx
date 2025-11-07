@@ -4,6 +4,7 @@ import { useThemeStore } from "store";
 import { useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@navikt/aksel-icons";
 import { ColorService } from "react-color-palette";
+import cl from "clsx/lite";
 
 export const ColorThemeSwitcher = () => {
   const activeColorTheme = useThemeStore((state) => state.activeColorTheme);
@@ -47,6 +48,10 @@ export const ColorThemeSwitcher = () => {
           <Dropdown.Item>
             {colors.main.map((colorTheme, index) => (
               <Dropdown.Button
+                className={cl(
+                  activeColorTheme.colorTheme.name === colorTheme.name &&
+                    classes.active
+                )}
                 onClick={() => {
                   setActiveColorTheme(
                     index,
@@ -63,6 +68,10 @@ export const ColorThemeSwitcher = () => {
             ))}
             {colors.support.map((colorTheme, index) => (
               <Dropdown.Button
+                className={cl(
+                  activeColorTheme.colorTheme.name === colorTheme.name &&
+                    classes.active
+                )}
                 onClick={() => {
                   setActiveColorTheme(
                     index,
@@ -79,6 +88,10 @@ export const ColorThemeSwitcher = () => {
             ))}
             {colors.severity.map((colorTheme, index) => (
               <Dropdown.Button
+                className={cl(
+                  activeColorTheme.colorTheme.name === colorTheme.name &&
+                    classes.active
+                )}
                 onClick={() => {
                   setActiveColorTheme(
                     index,

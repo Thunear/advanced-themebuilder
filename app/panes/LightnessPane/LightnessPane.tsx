@@ -105,7 +105,7 @@ export const LightnessPane = ({ onBackClicked }: LightnessPageProps) => {
         <ChevronLeftIcon aria-hidden fontSize="1.5rem" /> Gå tilbake
       </Button>
       <Heading className={classes.heading} data-size="xs">
-        Juster på lightness (lyshet)
+        Juster på lysheten til fargene
       </Heading>
       <Paragraph data-size="sm" className={classes.description}>
         Juster på HSLuv lightness for fargene. Dette vil påvirke alle fargene på
@@ -127,7 +127,7 @@ export const LightnessPane = ({ onBackClicked }: LightnessPageProps) => {
       </ToggleGroup>
 
       <Heading data-size="2xs" className={classes.subHeading}>
-        Velg preset
+        Velg en forhåndsinnstilling for lyshet
       </Heading>
 
       <div className={classes.presets}>
@@ -162,7 +162,7 @@ export const LightnessPane = ({ onBackClicked }: LightnessPageProps) => {
       </div>
 
       <Heading data-size="2xs" className={classes.subHeading}>
-        Juster på lyshet per farge
+        Juster på lyshet per fargesteg
       </Heading>
 
       <div className={classes.luminance}>
