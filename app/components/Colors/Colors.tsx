@@ -4,14 +4,6 @@ import classes from "./Colors.module.css";
 import { Divider } from "@digdir/designsystemet-react";
 import { ColorHeadings } from "../ColorHeadings/ColorHeadings";
 import { SectionText } from "../SectionText/SectionText";
-import {
-  generateColorSchemes,
-  getBaseDarkLightness,
-  type ColorMetadataByName,
-  type CssColor,
-  type ThemeInfo,
-} from "colors";
-import { useEffect } from "react";
 
 export const Colors = () => {
   const colors = useThemeStore((state) => state.colors);

@@ -24,6 +24,7 @@ export const ColorPreview = () => {
   );
   const activeColorTheme = useThemeStore((state) => state.activeColorTheme);
   const activePane = useThemeStore((state) => state.activePane);
+  const showSeverityColors = useThemeStore((state) => state.showSeverityColors);
 
   type CardProps = {
     color: ColorTheme;
@@ -155,20 +156,24 @@ export const ColorPreview = () => {
             <CardWrapper key={index} color={color} />
           ))}
         </div>
-        <Heading data-size="xs" className={classes.title}>
-          Severity
-        </Heading>
+        {showSeverityColors && (
+          <>
+            <Heading data-size="xs" className={classes.title}>
+              Severity
+            </Heading>
 
-        <div
-          className={cl(
-            classes.cards,
-            view === "grid" ? classes.grid : classes.list
-          )}
-        >
-          {colors.severity.map((color, index) => (
-            <CardWrapper key={index} color={color} />
-          ))}
-        </div>
+            <div
+              className={cl(
+                classes.cards,
+                view === "grid" ? classes.grid : classes.list
+              )}
+            >
+              {colors.severity.map((color, index) => (
+                <CardWrapper key={index} color={color} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
