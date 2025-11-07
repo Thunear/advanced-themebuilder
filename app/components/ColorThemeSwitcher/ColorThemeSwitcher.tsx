@@ -13,6 +13,7 @@ export const ColorThemeSwitcher = () => {
   );
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const colors = useThemeStore((state) => state.colors);
+  const showSeverityColors = useThemeStore((state) => state.showSeverityColors);
 
   return (
     <Dropdown.TriggerContext>
@@ -86,26 +87,30 @@ export const ColorThemeSwitcher = () => {
                 {colorTheme.name}
               </Dropdown.Button>
             ))}
-            {colors.severity.map((colorTheme, index) => (
-              <Dropdown.Button
-                className={cl(
-                  activeColorTheme.colorTheme.name === colorTheme.name &&
-                    classes.active
-                )}
-                onClick={() => {
-                  setActiveColorTheme(
-                    index,
-                    "severity",
-                    colorTheme,
-                    ColorService.convert("hex", colorTheme.colors.light[11].hex)
-                  );
-                  setDropdownOpen(false);
-                }}
-                key={index}
-              >
-                {colorTheme.name}
-              </Dropdown.Button>
-            ))}
+            {showSeverityColors &&
+              colors.severity.map((colorTheme, index) => (
+                <Dropdown.Button
+                  className={cl(
+                    activeColorTheme.colorTheme.name === colorTheme.name &&
+                      classes.active
+                  )}
+                  onClick={() => {
+                    setActiveColorTheme(
+                      index,
+                      "severity",
+                      colorTheme,
+                      ColorService.convert(
+                        "hex",
+                        colorTheme.colors.light[11].hex
+                      )
+                    );
+                    setDropdownOpen(false);
+                  }}
+                  key={index}
+                >
+                  {colorTheme.name}
+                </Dropdown.Button>
+              ))}
           </Dropdown.Item>
         </Dropdown.List>
       </Dropdown>

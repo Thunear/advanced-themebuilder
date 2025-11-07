@@ -49,6 +49,7 @@ export type ColorMetadataByName = {
 export type ColorMetadata = {
   name: ColorNames;
   number: ColorNumber;
+  colorOverride: string;
   displayName: string;
   description: {
     short: string;
@@ -83,7 +84,6 @@ export type Color = ColorMetadata & {
 export type ThemeInfo = {
   light: Color[];
   dark: Color[];
-  contrast: Color[];
 };
 
 /**

@@ -58,7 +58,7 @@ export const ColorGroup = ({
 
       <div className={cl(classes.colors)}>
         {colorNames.map((colorName, index) => {
-          const { number, hex } =
+          const { number, hex, colorOverride } =
             colorScale[internalColorScheme][
               colorMetadata[colorName].number - 1
             ];
@@ -76,7 +76,7 @@ export const ColorGroup = ({
               />
               <RovingFocusItem value={namespace + number} asChild>
                 <ColorSquare
-                  color={hex}
+                  color={colorOverride ? colorOverride : hex}
                   colorName={colorName}
                   showColorMeta={showColorMeta}
                   aria-label={`Se mer om ${namespace} ${color?.displayName}`}

@@ -1,5 +1,4 @@
 import {
-  type ColorNames,
   type CssColor,
   RESERVED_COLORS,
   generateColorSchemes,
@@ -10,7 +9,12 @@ import {
   Paragraph,
   Textfield,
 } from "@digdir/designsystemet-react";
-import { ChevronLeftIcon, CogIcon, TrashIcon } from "@navikt/aksel-icons";
+import {
+  ChevronLeftIcon,
+  CogIcon,
+  NotePencilIcon,
+  TrashIcon,
+} from "@navikt/aksel-icons";
 import { ColorPicker, type IColor } from "react-color-palette";
 import { useThemeStore, type PaneType } from "../../../store";
 
@@ -18,6 +22,7 @@ import cl from "clsx/lite";
 import { useState } from "react";
 import { AdvancedColorPane } from "../AdvancedColorPane/AdvancedColorPane";
 import classes from "./ColorPane.module.css";
+import { ColorOverridePane } from "../ColorOverridePane/ColorOverridePane";
 
 type ColorPaneProps = {
   onClose: () => void;
@@ -35,6 +40,7 @@ export const ColorPane = ({
   const mainColors = useThemeStore((state) => state.colors.main);
   const [colorError, setColorError] = useState("");
   const [advancedColors, setAdvancedColors] = useState(false);
+  const [showOverridePane, setShowOverridePane] = useState(false);
   const updateColorTheme = useThemeStore((state) => state.updateColorTheme);
 
   const activeColorTheme = useThemeStore((state) => state.activeColorTheme);
@@ -81,20 +87,11 @@ export const ColorPane = ({
     onClose();
   };
 
-  const colorsToTestAgainst: ColorNames[] = [
-    "background-default",
-    "background-tinted",
-    "surface-default",
-    "surface-tinted",
-    "surface-hover",
-    "surface-active",
-  ];
-
   return (
     <div
       className={cl(classes.colorPage, type.includes("color") && classes.show)}
     >
-      {!advancedColors && (
+      {!advancedColors && !showOverridePane && (
         <>
           <div className={classes.topBtnGroup}>
             <Button
@@ -208,14 +205,7 @@ export const ColorPane = ({
                 color.hex as CssColor,
                 activeColorTheme.colorTheme.colorMetadata
               );
-              updateColorTheme(
-                {
-                  ...activeColorTheme.colorTheme,
-                  colors: updatedColors,
-                },
-                activeColorTheme.index,
-                activeColorTheme.type
-              );
+
               setActiveColorTheme(
                 activeColorTheme.index,
                 activeColorTheme.type,
@@ -225,10 +215,28 @@ export const ColorPane = ({
                 },
                 color
               );
+              updateColorTheme(
+                {
+                  ...activeColorTheme.colorTheme,
+                  colors: updatedColors,
+                },
+                activeColorTheme.index,
+                activeColorTheme.type
+              );
             }}
             hideInput={["rgb", "hsv"]}
             onChangeComplete={(color) => {}}
           />
+          <Button
+            className={classes.overrideBtn}
+            variant="tertiary"
+            data-size="sm"
+            data-color="neutral"
+            onClick={() => setShowOverridePane(true)}
+          >
+            <NotePencilIcon title="tannhjul" fontSize="1.5rem" />
+            Overstyr fargesteg manuelt
+          </Button>
           <Button
             className={classes.advancedBtn}
             variant="tertiary"
@@ -244,6 +252,9 @@ export const ColorPane = ({
 
       {advancedColors && (
         <AdvancedColorPane onBackClicked={() => setAdvancedColors(false)} />
+      )}
+      {showOverridePane && (
+        <ColorOverridePane onBackClicked={() => setShowOverridePane(false)} />
       )}
     </div>
   );

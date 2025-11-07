@@ -44,29 +44,17 @@ export const LightnessPane = ({ onBackClicked }: LightnessPageProps) => {
     value: number,
     colorMetadata: ColorMetadata
   ) => {
-    colors.main.map((colorTheme, i) => {
-      colorTheme.colorMetadata[colorMetadata.name].lightness[
-        internalColorScheme
-      ] = value;
-      updateColorTheme(colorTheme, i, "main");
-    });
-    colors.neutral.map((colorTheme, i) => {
-      colorTheme.colorMetadata[colorMetadata.name].lightness[
-        internalColorScheme
-      ] = value;
-      updateColorTheme(colorTheme, i, "neutral");
-    });
-    colors.support.map((colorTheme, i) => {
-      colorTheme.colorMetadata[colorMetadata.name].lightness[
-        internalColorScheme
-      ] = value;
-      updateColorTheme(colorTheme, i, "support");
-    });
-    colors.severity.map((colorTheme, i) => {
-      colorTheme.colorMetadata[colorMetadata.name].lightness[
-        internalColorScheme
-      ] = value;
-      updateColorTheme(colorTheme, i, "severity");
+    ["main", "neutral", "support", "severity"].forEach((category) => {
+      colors[category as keyof typeof colors].forEach((colorTheme, i) => {
+        colorTheme.colorMetadata[colorMetadata.name].lightness[
+          internalColorScheme
+        ] = value;
+        updateColorTheme(
+          colorTheme,
+          i,
+          category as "main" | "neutral" | "support" | "severity"
+        );
+      });
     });
 
     setOnColorThemeChange(onColorThemeChange + 1);

@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  font-size: 14px;
+  height: 42px;
+  border: 1px solid var(--ds-color-neutral-border-default);
+  border-radius: 0 4px 4px 0;
+  padding-left: 10px;
+}
+
+.label {
+  width: 300px;
+  font-size: 16px;
+}
+
+.colorPreviewContainer {
+  height: 42px;
+  width: 42px;
+  flex-basis: 42px;
+  border: 1px solid var(--ds-color-neutral-border-default);
+  margin-right: -1px;
+  border-radius: 4px 0 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.colorPreview {
+  height: 24px;
+  width: 24px;
+  border-radius: 4px;
+}
+
+.inputContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.clearButton {
+  position: absolute;
+  right: 1px;
+}

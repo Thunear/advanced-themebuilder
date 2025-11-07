@@ -70,9 +70,15 @@
   padding: 0 16px;
 }
 
-.advancedBtn {
-  margin-top: 16px;
+.overrideBtn {
+  margin-top: 20px;
+  margin-bottom: 4px;
   margin-left: -12px;
+}
+
+.advancedBtn {
+  margin-left: -12px;
+  margin-bottom: -8px;
 }
 
 .alert {

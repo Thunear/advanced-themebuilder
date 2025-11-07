@@ -34,12 +34,12 @@
 }
 
 .title {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .blurry:after {
   background-color: var(--ds-color-neutral-surface-default);
-  opacity: 0.55;
+  opacity: 0.4;
   position: absolute;
   content: "";
   top: -1px;
@@ -50,5 +50,10 @@
 }
 
 .blurry {
-  pointer-events: none;
+}
+
+.blurry:hover {
+  cursor: not-allowed;
+  border-color: var(--ds-color-neutral-border-subtle);
+  background-color: var(--ds-color-neutral-background-default);
 }
