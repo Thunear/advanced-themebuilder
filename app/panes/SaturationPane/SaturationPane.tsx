@@ -51,10 +51,11 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
     hsl: ["#ffffff" as CssColor, "#000000" as CssColor, "#ff0000" as CssColor],
   });
 
-  const test = () => {
-    const activeColor = activeColorTheme.colorTheme.colors.light[11].hex;
-    const lightnessValues = [90, 50, 25];
-    const arr = ["#ffffff", "#000000", "#ff0000"];
+  const updateGradientColors = () => {
+    const activeColor =
+      activeColorTheme.colorTheme.colors[internalColorScheme][11].hex;
+    const lightnessValues =
+      internalColorScheme === "light" ? [90, 50, 25] : [25, 50, 90];
 
     const updatedGradientColors = { ...gradientColors };
 
@@ -77,7 +78,7 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
   };
 
   useEffect(() => {
-    test();
+    updateGradientColors();
   }, [activeColorTheme, internalColorScheme]);
 
   const handleSaturationChange = (value: number, type: string) => {
@@ -98,8 +99,9 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
     }
 
     const updatedColors = generateColorSchemes({
-      lightColor: colorTheme.colors.light[11].hex,
-      darkColor: activeColorTheme.colorTheme.colors.dark[11].hex,
+      lightColor: (colorTheme.lightColor?.hex ||
+        colorTheme.colors.light[11].hex) as CssColor,
+      darkColor: colorTheme.darkColor?.hex as CssColor | undefined,
       colorMetaData: colorTheme.colorMetadata,
     });
 
@@ -107,6 +109,8 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
       {
         ...colorTheme,
         colors: updatedColors,
+        lightColor: colorTheme.lightColor,
+        darkColor: colorTheme.darkColor,
       },
       activeColorTheme.index,
       activeColorTheme.type
