@@ -51,7 +51,7 @@ export const ColorOverridePane = ({
       activeColorTheme.index,
       activeColorTheme.type,
       updatedColorTheme,
-      activeColorTheme.color
+      activeColorTheme.lightColor
     );
     updateColorTheme(
       updatedColorTheme,
