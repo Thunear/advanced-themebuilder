@@ -105,10 +105,22 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
       colorMetaData: colorTheme.colorMetadata,
     });
 
+    // Preserve colorOverride values from the existing theme
+    const preservedColors = {
+      light: updatedColors.light.map((newColor, index) => ({
+        ...newColor,
+        colorOverride: colorTheme.colors.light[index]?.colorOverride || "",
+      })),
+      dark: updatedColors.dark.map((newColor, index) => ({
+        ...newColor,
+        colorOverride: colorTheme.colors.dark[index]?.colorOverride || "",
+      })),
+    };
+
     updateColorTheme(
       {
         ...colorTheme,
-        colors: updatedColors,
+        colors: preservedColors,
         lightColor: colorTheme.lightColor,
         darkColor: colorTheme.darkColor,
       },
@@ -133,15 +145,34 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
     }
 
     const colors = generateColorSchemes({
-      lightColor: activeColorTheme.colorTheme.colors.light[11].hex,
-      darkColor: activeColorTheme.colorTheme.colors.dark[11].hex,
+      lightColor: (activeColorTheme.colorTheme.lightColor?.hex ||
+        activeColorTheme.colorTheme.colors.light[11].hex) as CssColor,
+      darkColor: activeColorTheme.colorTheme.darkColor?.hex as
+        | CssColor
+        | undefined,
       colorMetaData: activeColorTheme.colorTheme.colorMetadata,
     });
+
+    // Preserve colorOverride values from the existing theme
+    const preservedColors = {
+      light: colors.light.map((newColor, index) => ({
+        ...newColor,
+        colorOverride:
+          activeColorTheme.colorTheme.colors.light[index]?.colorOverride || "",
+      })),
+      dark: colors.dark.map((newColor, index) => ({
+        ...newColor,
+        colorOverride:
+          activeColorTheme.colorTheme.colors.dark[index]?.colorOverride || "",
+      })),
+    };
 
     updateColorTheme(
       {
         ...activeColorTheme.colorTheme,
-        colors,
+        colors: preservedColors,
+        lightColor: activeColorTheme.colorTheme.lightColor,
+        darkColor: activeColorTheme.colorTheme.darkColor,
       },
       activeColorTheme.index,
       activeColorTheme.type

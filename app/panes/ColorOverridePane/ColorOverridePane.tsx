@@ -38,20 +38,16 @@ export const ColorOverridePane = ({
             : color
         ),
       },
-      colorMetadata: {
-        ...activeColorTheme.colorTheme.colorMetadata,
-        [color2.name]: {
-          ...activeColorTheme.colorTheme.colorMetadata[color2.name],
-          colorOverride: value,
-        },
-      },
+      lightColor: activeColorTheme.lightColor,
+      darkColor: activeColorTheme.darkColor,
     };
 
     setActiveColorTheme(
       activeColorTheme.index,
       activeColorTheme.type,
       updatedColorTheme,
-      activeColorTheme.lightColor
+      activeColorTheme.lightColor,
+      activeColorTheme.darkColor
     );
     updateColorTheme(
       updatedColorTheme,

@@ -112,9 +112,23 @@ export const ColorPane = ({
       colorMetaData: activeColorTheme.colorTheme.colorMetadata,
     });
 
+    // Preserve colorOverride values from the existing theme
+    const preservedColors = {
+      light: updatedColors.light.map((newColor, index) => ({
+        ...newColor,
+        colorOverride:
+          activeColorTheme.colorTheme.colors.light[index]?.colorOverride || "",
+      })),
+      dark: updatedColors.dark.map((newColor, index) => ({
+        ...newColor,
+        colorOverride:
+          activeColorTheme.colorTheme.colors.dark[index]?.colorOverride || "",
+      })),
+    };
+
     const updatedTheme = {
       ...activeColorTheme.colorTheme,
-      colors: updatedColors,
+      colors: preservedColors,
       lightColor: newLightColor,
       darkColor: newDarkColor,
     };
