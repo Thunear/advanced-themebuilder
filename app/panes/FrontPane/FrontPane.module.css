@@ -50,6 +50,7 @@
 }
 
 .blurry {
+  display: none;
 }
 
 .blurry:hover {

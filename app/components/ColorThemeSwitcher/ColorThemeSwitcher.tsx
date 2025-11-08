@@ -67,6 +67,26 @@ export const ColorThemeSwitcher = () => {
                 {colorTheme.name}
               </Dropdown.Button>
             ))}
+            {colors.neutral.map((colorTheme, index) => (
+              <Dropdown.Button
+                className={cl(
+                  activeColorTheme.colorTheme.name === colorTheme.name &&
+                    classes.active
+                )}
+                onClick={() => {
+                  setActiveColorTheme(
+                    index,
+                    "neutral",
+                    colorTheme,
+                    ColorService.convert("hex", colorTheme.colors.light[11].hex)
+                  );
+                  setDropdownOpen(false);
+                }}
+                key={index}
+              >
+                {colorTheme.name}
+              </Dropdown.Button>
+            ))}
             {colors.support.map((colorTheme, index) => (
               <Dropdown.Button
                 className={cl(

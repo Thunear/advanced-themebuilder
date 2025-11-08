@@ -9,6 +9,7 @@ import {
 } from "@navikt/aksel-icons";
 import { useThemeStore } from "store";
 import cl from "clsx/lite";
+import { ColorSchemeSwitch } from "../ColorSchemeSwitch/ColorSchemeSwitch";
 
 export function Toolbar() {
   const setShrinkSidebar = useThemeStore((state) => state.setShrinkSidebar);
@@ -66,21 +67,7 @@ export function Toolbar() {
         </div>
       </div>
       <div className={classes.right}>
-        <ToggleGroup
-          value={internalColorScheme}
-          name="toggle-group-nuts"
-          data-size="sm"
-          data-color="neutral"
-          variant="secondary"
-          className="subtle-toggle-group"
-          onChange={(value) => {
-            setInternalColorScheme(value as "light" | "dark");
-            console.log("Selected:", value);
-          }}
-        >
-          <ToggleGroup.Item value="light">Lys modus</ToggleGroup.Item>
-          <ToggleGroup.Item value="dark">Mørk modus</ToggleGroup.Item>
-        </ToggleGroup>
+        <ColorSchemeSwitch />
       </div>
     </div>
   );

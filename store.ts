@@ -14,6 +14,8 @@ export type ColorTheme = {
   name: string;
   colors: ThemeInfo;
   colorMetadata: ColorMetadataByName;
+  lightColor?: IColor;
+  darkColor?: IColor;
 };
 
 export type BaseBorderRadius = number;
@@ -42,13 +44,15 @@ type ColorStore = {
     index: number;
     type: "main" | "neutral" | "support" | "severity";
     colorTheme: ColorTheme;
-    color: IColor;
+    lightColor: IColor;
+    darkColor?: IColor;
   };
   setActiveColorTheme: (
     index: number,
     type: "main" | "neutral" | "support" | "severity",
     colorTheme: ColorTheme,
-    color: IColor
+    lightColor: IColor,
+    darkColor?: IColor
   ) => void;
   onColorThemeChange: number;
   setOnColorThemeChange: (value: number) => void;
@@ -106,18 +110,21 @@ export const useThemeStore = create(
     activeColorTheme: {
       index: 0,
       type: "main",
-      color: ColorService.convert("hex", "#0062ba"),
+      lightColor: ColorService.convert("hex", "#0062ba"),
+      darkColor: ColorService.convert("hex", "#004b87"),
       colorTheme: {
         name: "primary",
-        colors: generateColorSchemes(
-          "#0062BA",
-          JSON.parse(JSON.stringify(colorMetadata))
-        ),
+        colors: generateColorSchemes({
+          lightColor: "#0062BA",
+          colorMetaData: colorMetadata,
+        }),
         colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
       },
     },
-    setActiveColorTheme: (index, type, colorTheme, color) =>
-      set({ activeColorTheme: { index, type, colorTheme, color } }),
+    setActiveColorTheme: (index, type, colorTheme, lightColor, darkColor) =>
+      set({
+        activeColorTheme: { index, type, colorTheme, lightColor, darkColor },
+      }),
     shrinkSidebar: false,
     setShrinkSidebar: (shrink) => set({ shrinkSidebar: shrink }),
     showSeverityColors: false,
@@ -138,80 +145,80 @@ export const useThemeStore = create(
       main: [
         {
           name: "primary",
-          colors: generateColorSchemes(
-            "#0062BA",
-            JSON.parse(JSON.stringify(colorMetadata))
-          ),
+          colors: generateColorSchemes({
+            lightColor: "#0062BA",
+            colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
+          }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
         {
           name: "accent",
-          colors: generateColorSchemes(
-            "#1E98F5",
-            JSON.parse(JSON.stringify(colorMetadata))
-          ),
+          colors: generateColorSchemes({
+            lightColor: "#1E98F5",
+            colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
+          }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
       ],
       neutral: [
         {
           name: "neutral",
-          colors: generateColorSchemes(
-            "#1E2B3C",
-            JSON.parse(JSON.stringify(colorMetadata))
-          ),
+          colors: generateColorSchemes({
+            lightColor: "#1E2B3C",
+            colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
+          }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
       ],
       support: [
         {
           name: "extra1",
-          colors: generateColorSchemes(
-            "#F45F63",
-            JSON.parse(JSON.stringify(colorMetadata))
-          ),
+          colors: generateColorSchemes({
+            lightColor: "#F45F63",
+            colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
+          }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
         {
           name: "extra2",
-          colors: generateColorSchemes(
-            "#E5AA20",
-            JSON.parse(JSON.stringify(colorMetadata))
-          ),
+          colors: generateColorSchemes({
+            lightColor: "#E5AA20",
+            colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
+          }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
       ],
       severity: [
         {
           name: "info",
-          colors: generateColorSchemes(
-            baseColors.blue,
-            JSON.parse(JSON.stringify(colorMetadata))
-          ),
+          colors: generateColorSchemes({
+            lightColor: baseColors.blue,
+            colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
+          }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
         {
           name: "success",
-          colors: generateColorSchemes(
-            baseColors.green,
-            JSON.parse(JSON.stringify(colorMetadata))
-          ),
+          colors: generateColorSchemes({
+            lightColor: baseColors.green,
+            colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
+          }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
         {
           name: "warning",
-          colors: generateColorSchemes(
-            baseColors.orange,
-            JSON.parse(JSON.stringify(colorMetadata))
-          ),
+          colors: generateColorSchemes({
+            lightColor: baseColors.orange,
+            colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
+          }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
         {
           name: "error",
-          colors: generateColorSchemes(
-            baseColors.red,
-            JSON.parse(JSON.stringify(colorMetadata))
-          ),
+          colors: generateColorSchemes({
+            lightColor: baseColors.red,
+            colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
+          }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
       ],

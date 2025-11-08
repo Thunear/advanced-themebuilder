@@ -55,7 +55,9 @@ export const LightnessInput = ({
           oneLiner && classes.labelContainerOneLiner
         )}
       >
-        <div className={classes.label}>{label}</div>
+        <div className={cl(oneLiner ? classes.inlineLabel : classes.label)}>
+          {label}
+        </div>
         {description && (
           <div
             className={cl(

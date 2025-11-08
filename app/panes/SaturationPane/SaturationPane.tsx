@@ -97,10 +97,11 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
       }
     }
 
-    const updatedColors = generateColorSchemes(
-      activeColorTheme.colorTheme.colors.light[11].hex,
-      colorTheme.colorMetadata
-    );
+    const updatedColors = generateColorSchemes({
+      lightColor: colorTheme.colors.light[11].hex,
+      darkColor: activeColorTheme.colorTheme.colors.dark[11].hex,
+      colorMetaData: colorTheme.colorMetadata,
+    });
 
     updateColorTheme(
       {
@@ -127,10 +128,11 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
       metadata.interpolation = interpolation as InterpolationMode;
     }
 
-    const colors = generateColorSchemes(
-      activeColorTheme.colorTheme.colors.light[11].hex,
-      activeColorTheme.colorTheme.colorMetadata
-    );
+    const colors = generateColorSchemes({
+      lightColor: activeColorTheme.colorTheme.colors.light[11].hex,
+      darkColor: activeColorTheme.colorTheme.colors.dark[11].hex,
+      colorMetaData: activeColorTheme.colorTheme.colorMetadata,
+    });
 
     updateColorTheme(
       {

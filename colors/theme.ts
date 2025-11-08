@@ -86,12 +86,25 @@ export const generateColorScale = (
  * @param colorMetaData The metadata for the color
  * @param staticSaturation The static saturation value for the color
  */
-export const generateColorSchemes = (
-  color: CssColor,
-  colorMetaData?: typeof colorMetadata
-): ThemeInfo => ({
-  light: generateColorScale(color, "light", colorMetaData || colorMetadata),
-  dark: generateColorScale(color, "dark", colorMetaData || colorMetadata),
+export const generateColorSchemes = ({
+  lightColor,
+  darkColor,
+  colorMetaData,
+}: {
+  lightColor: CssColor;
+  darkColor?: CssColor;
+  colorMetaData?: typeof colorMetadata;
+}): ThemeInfo => ({
+  light: generateColorScale(
+    lightColor,
+    "light",
+    colorMetaData || colorMetadata
+  ),
+  dark: generateColorScale(
+    darkColor || lightColor,
+    "dark",
+    colorMetaData || colorMetadata
+  ),
 });
 
 /**

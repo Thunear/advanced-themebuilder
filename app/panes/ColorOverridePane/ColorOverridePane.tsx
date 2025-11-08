@@ -1,7 +1,11 @@
 import { Button, Heading } from "@digdir/designsystemet-react";
 import classes from "./ColorOverridePane.module.css";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
-import { ColorOverrideInput, ColorThemeSwitcher } from "~/components";
+import {
+  ColorOverrideInput,
+  ColorSchemeSwitch,
+  ColorThemeSwitcher,
+} from "~/components";
 import { useThemeStore } from "store";
 import type { ColorMetadata } from "colors";
 
@@ -76,6 +80,8 @@ export const ColorOverridePane = ({
       <Heading data-size="xs" className={classes.heading}>
         Overstyr fargesteg manuelt
       </Heading>
+
+      <ColorSchemeSwitch />
 
       <div className={classes.overrideInputs}>
         {activeColorTheme.colorTheme.colors[internalColorScheme].map(

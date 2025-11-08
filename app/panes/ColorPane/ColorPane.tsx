@@ -10,19 +10,23 @@ import {
   Textfield,
 } from "@digdir/designsystemet-react";
 import {
+  ArrowCirclepathReverseIcon,
   ChevronLeftIcon,
   CogIcon,
   NotePencilIcon,
   TrashIcon,
+  XMarkIcon,
 } from "@navikt/aksel-icons";
-import { ColorPicker, type IColor } from "react-color-palette";
+import { ColorPicker, ColorService, type IColor } from "react-color-palette";
 import { useThemeStore, type PaneType } from "../../../store";
 
 import cl from "clsx/lite";
-import { useState } from "react";
+import { act, useState } from "react";
 import { AdvancedColorPane } from "../AdvancedColorPane/AdvancedColorPane";
 import classes from "./ColorPane.module.css";
 import { ColorOverridePane } from "../ColorOverridePane/ColorOverridePane";
+import { ColorSchemeSwitch } from "~/components";
+import Color from "colorjs.io";
 
 type ColorPaneProps = {
   onClose: () => void;
@@ -42,6 +46,9 @@ export const ColorPane = ({
   const [advancedColors, setAdvancedColors] = useState(false);
   const [showOverridePane, setShowOverridePane] = useState(false);
   const updateColorTheme = useThemeStore((state) => state.updateColorTheme);
+  const internalColorScheme = useThemeStore(
+    (state) => state.internalColorScheme
+  );
 
   const activeColorTheme = useThemeStore((state) => state.activeColorTheme);
   const setActiveColorTheme = useThemeStore(
@@ -85,6 +92,45 @@ export const ColorPane = ({
   const closeTab = () => {
     setColorError("");
     onClose();
+  };
+
+  const handleChange = (color: IColor) => {
+    const newLightColor =
+      internalColorScheme === "light" ? color : activeColorTheme.lightColor;
+    const newDarkColor =
+      internalColorScheme === "dark" ? color : activeColorTheme.darkColor;
+
+    const updatedColors = generateColorSchemes({
+      lightColor:
+        internalColorScheme === "light"
+          ? (color.hex as CssColor)
+          : (activeColorTheme.lightColor.hex as CssColor),
+      darkColor:
+        internalColorScheme === "dark"
+          ? (color.hex as CssColor)
+          : (activeColorTheme.darkColor?.hex as CssColor) || undefined,
+      colorMetaData: activeColorTheme.colorTheme.colorMetadata,
+    });
+
+    const updatedTheme = {
+      ...activeColorTheme.colorTheme,
+      colors: updatedColors,
+      lightColor: newLightColor,
+      darkColor: newDarkColor,
+    };
+
+    setActiveColorTheme(
+      activeColorTheme.index,
+      activeColorTheme.type,
+      updatedTheme,
+      newLightColor,
+      newDarkColor
+    );
+    updateColorTheme(
+      updatedTheme,
+      activeColorTheme.index,
+      activeColorTheme.type
+    );
   };
 
   return (
@@ -165,20 +211,21 @@ export const ColorPane = ({
                     .replace(/\s+/g, "-")
                     .replace(/[^A-Z0-9-]+/gi, "")
                     .toLowerCase();
+                  const updatedTheme = {
+                    ...activeColorTheme.colorTheme,
+                    name: value,
+                    lightColor: activeColorTheme.lightColor,
+                    darkColor: activeColorTheme.darkColor,
+                  };
                   setActiveColorTheme(
                     activeColorTheme.index,
                     activeColorTheme.type,
-                    {
-                      ...activeColorTheme.colorTheme,
-                      name: value,
-                    },
-                    activeColorTheme.color
+                    updatedTheme,
+                    activeColorTheme.lightColor,
+                    activeColorTheme.darkColor
                   );
                   updateColorTheme(
-                    {
-                      ...activeColorTheme.colorTheme,
-                      name: value,
-                    },
+                    updatedTheme,
                     activeColorTheme.index,
                     activeColorTheme.type
                   );
@@ -187,46 +234,85 @@ export const ColorPane = ({
                 error={colorError}
               />
             )}
-          <div className={classes.label}>Farge</div>
+          <div className={classes.label}>Velg Farge</div>
+
+          <ColorSchemeSwitch />
+
           <div className={classes.colorPreviewContainer}>
             <div
               style={{
                 backgroundColor:
-                  activeColorTheme.colorTheme.colors.light[11].hex,
+                  internalColorScheme === "light"
+                    ? (activeColorTheme.lightColor.hex as string)
+                    : activeColorTheme.darkColor
+                    ? (activeColorTheme.darkColor.hex as string)
+                    : activeColorTheme.colorTheme.colors.dark[11].hex,
               }}
               className={classes.colorPreview}
             ></div>
           </div>
           <ColorPicker
             hideAlpha
-            color={activeColorTheme.color}
+            color={
+              internalColorScheme === "light"
+                ? activeColorTheme.lightColor
+                : activeColorTheme.darkColor ||
+                  ColorService.convert(
+                    "hex",
+                    activeColorTheme.colorTheme.colors.dark[11].hex
+                  )
+            }
             onChange={(color: IColor) => {
-              const updatedColors = generateColorSchemes(
-                color.hex as CssColor,
-                activeColorTheme.colorTheme.colorMetadata
-              );
-
-              setActiveColorTheme(
-                activeColorTheme.index,
-                activeColorTheme.type,
-                {
-                  ...activeColorTheme.colorTheme,
-                  colors: updatedColors,
-                },
-                color
-              );
-              updateColorTheme(
-                {
-                  ...activeColorTheme.colorTheme,
-                  colors: updatedColors,
-                },
-                activeColorTheme.index,
-                activeColorTheme.type
-              );
+              handleChange(color);
             }}
             hideInput={["rgb", "hsv"]}
             onChangeComplete={(color) => {}}
           />
+
+          {internalColorScheme === "dark" && activeColorTheme.darkColor && (
+            <div>
+              <Button
+                className={classes.resetButton}
+                data-size="sm"
+                data-color="danger"
+                variant="tertiary"
+                onClick={() => {
+                  const updatedColors = generateColorSchemes({
+                    lightColor: activeColorTheme.lightColor.hex as CssColor,
+                    darkColor: undefined,
+                    colorMetaData: activeColorTheme.colorTheme.colorMetadata,
+                  });
+
+                  const updatedTheme = {
+                    ...activeColorTheme.colorTheme,
+                    colors: updatedColors,
+                    lightColor: activeColorTheme.lightColor,
+                    darkColor: undefined,
+                  };
+
+                  setActiveColorTheme(
+                    activeColorTheme.index,
+                    activeColorTheme.type,
+                    updatedTheme,
+                    activeColorTheme.lightColor,
+                    undefined
+                  );
+                  updateColorTheme(
+                    updatedTheme,
+                    activeColorTheme.index,
+                    activeColorTheme.type
+                  );
+                }}
+              >
+                <ArrowCirclepathReverseIcon
+                  title="a11y-title"
+                  fontSize="1.5rem"
+                />
+                Fjern overstyring av mørk modus
+              </Button>
+            </div>
+          )}
+
           <Button
             className={classes.overrideBtn}
             variant="tertiary"

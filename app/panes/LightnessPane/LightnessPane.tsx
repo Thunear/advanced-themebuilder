@@ -7,7 +7,11 @@ import {
 import { colorMetadata, type ColorMetadata } from "../../../colors";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { useThemeStore } from "../../../store";
-import { LightnessInput, LightnessPresetInput } from "../../components";
+import {
+  ColorSchemeSwitch,
+  LightnessInput,
+  LightnessPresetInput,
+} from "../../components";
 import classes from "./LightnessPane.module.css";
 import { lightnessPresets } from "colors/lightnessPresets";
 
@@ -93,26 +97,13 @@ export const LightnessPane = ({ onBackClicked }: LightnessPageProps) => {
         <ChevronLeftIcon aria-hidden fontSize="1.5rem" /> Gå tilbake
       </Button>
       <Heading className={classes.heading} data-size="xs">
-        Juster på lysheten til fargene
+        Endre lyshet på fargene
       </Heading>
       <Paragraph data-size="sm" className={classes.description}>
         Juster på HSLuv lightness for fargene. Dette vil påvirke alle fargene på
         tvers av fargeskalaer.
       </Paragraph>
-      <ToggleGroup
-        value={internalColorScheme}
-        name="toggle-group-nuts"
-        data-size="sm"
-        data-color="neutral"
-        className="subtle-toggle-group"
-        data-variant="secondary"
-        onChange={(value) => {
-          setInternalColorScheme(value as "light" | "dark");
-        }}
-      >
-        <ToggleGroup.Item value="light">Lys modus</ToggleGroup.Item>
-        <ToggleGroup.Item value="dark">Mørk modus</ToggleGroup.Item>
-      </ToggleGroup>
+      <ColorSchemeSwitch />
 
       <Heading data-size="2xs" className={classes.subHeading}>
         Velg en forhåndsinnstilling for lyshet

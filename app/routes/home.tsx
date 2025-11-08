@@ -42,10 +42,10 @@ export default function Home() {
       color.colorMetadata["base-default"].lightness.dark = getBaseDarkLightness(
         color.colors.light[11].hex as CssColor
       );
-      const updatedColors = generateColorSchemes(
-        color.colors.light[11].hex,
-        color.colorMetadata
-      );
+      const updatedColors = generateColorSchemes({
+        lightColor: color.colors.light[11].hex,
+        colorMetaData: color.colorMetadata,
+      });
       return {
         name: color.name,
         colors: updatedColors,
@@ -54,10 +54,10 @@ export default function Home() {
     });
 
     const updatedNeutralColors = colors.neutral.map((color) => {
-      const updatedColors = generateColorSchemes(
-        color.colors.light[11].hex,
-        color.colorMetadata
-      );
+      const updatedColors = generateColorSchemes({
+        lightColor: color.colors.light[11].hex,
+        colorMetaData: color.colorMetadata,
+      });
       return {
         name: color.name,
         colors: updatedColors,
@@ -66,10 +66,10 @@ export default function Home() {
     });
 
     const updatedSupportColors = colors.support.map((color) => {
-      const updatedColors = generateColorSchemes(
-        color.colors.light[11].hex,
-        color.colorMetadata
-      );
+      const updatedColors = generateColorSchemes({
+        lightColor: color.colors.light[11].hex,
+        colorMetaData: color.colorMetadata,
+      });
       return {
         name: color.name,
         colors: updatedColors,
@@ -78,10 +78,10 @@ export default function Home() {
     });
 
     const updatedSeverityColors = colors.severity.map((color) => {
-      const updatedColors = generateColorSchemes(
-        color.colors.light[11].hex,
-        color.colorMetadata
-      );
+      const updatedColors = generateColorSchemes({
+        lightColor: color.colors.light[11].hex,
+        colorMetaData: color.colorMetadata,
+      });
       return {
         name: color.name,
         colors: updatedColors,

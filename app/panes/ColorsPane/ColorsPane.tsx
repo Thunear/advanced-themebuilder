@@ -48,7 +48,9 @@ export const ColorsPane = () => {
       index,
       colorType,
       colorTheme,
-      ColorService.convert("hex", colorTheme.colors.light[11].hex)
+      colorTheme.lightColor ||
+        ColorService.convert("hex", colorTheme.colors.light[11].hex),
+      colorTheme.darkColor
     );
     setInitialColor(colorTheme.colors.light[11].hex);
     setInitialName(colorTheme.name);
@@ -69,7 +71,10 @@ export const ColorsPane = () => {
     setActivePane("colors/add");
     const newTheme: ColorTheme = {
       name: newColorName,
-      colors: generateColorSchemes("#0062ba", colorMetadata),
+      colors: generateColorSchemes({
+        lightColor: "#0062ba",
+        colorMetaData: colorMetadata,
+      }),
       colorMetadata,
     };
     addColor(newTheme, colorType);
@@ -106,7 +111,7 @@ export const ColorsPane = () => {
               onClick={() => setActivePane("colors/lightness")}
             >
               <CogIcon title="tannhjul" fontSize="1.6rem" />
-              Globale innstillinger
+              Endre lyshet på fargene
             </Button>
           </>
         </div>
@@ -253,10 +258,10 @@ export const ColorsPane = () => {
               updateColorTheme(
                 {
                   name: initialName,
-                  colors: generateColorSchemes(
-                    initialColor as CssColor,
-                    colorMetadata
-                  ),
+                  colors: generateColorSchemes({
+                    lightColor: initialColor as CssColor,
+                    colorMetaData: colorMetadata,
+                  }),
                   colorMetadata,
                 },
                 activeColorTheme.index,

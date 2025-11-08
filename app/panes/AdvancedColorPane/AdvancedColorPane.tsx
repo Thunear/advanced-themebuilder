@@ -3,7 +3,11 @@ import { generateColorSchemes, getBaseDarkLightness } from "../../../colors";
 import { ChevronLeftIcon, PaletteIcon } from "@navikt/aksel-icons";
 import { useEffect, useState } from "react";
 import { useThemeStore } from "../../../store";
-import { ColorThemeSwitcher, LightnessInput } from "../../components";
+import {
+  ColorSchemeSwitch,
+  ColorThemeSwitcher,
+  LightnessInput,
+} from "../../components";
 import { SaturationPane } from "../SaturationPane/SaturationPane";
 import classes from "./AdvancedColorPane.module.css";
 
@@ -99,82 +103,11 @@ export const AdvancedColorPane = ({
             Instillinger for Base fargene
           </Heading>
 
-          <ToggleGroup
-            value={internalColorScheme}
-            name="toggle-group-nuts"
-            data-size="sm"
-            data-color="neutral"
-            variant="secondary"
-            className="subtle-toggle-group"
-            onChange={(value) => {
-              setInternalColorScheme(value as "light" | "dark");
-            }}
-          >
-            <ToggleGroup.Item value="light">Lys modus</ToggleGroup.Item>
-            <ToggleGroup.Item value="dark">Mørk modus</ToggleGroup.Item>
-          </ToggleGroup>
+          <ColorSchemeSwitch />
 
           <div className={classes.group}>
-            {internalColorScheme === "dark" && (
-              <LightnessInput
-                label="Base Default lightness"
-                description="Som standard blir lightness for Base Default fargen satt til det motsatt av det den er i lys modus."
-                value={
-                  activeColorTheme.colorTheme.colorMetadata["base-default"]
-                    .lightness[internalColorScheme] === -1
-                    ? baseDarkLightness
-                    : activeColorTheme.colorTheme.colorMetadata["base-default"]
-                        .lightness[internalColorScheme] ?? baseDarkLightness
-                }
-                initialValue={baseDarkLightness}
-                onChange={(value) => {
-                  if (activeColorTheme) {
-                    activeColorTheme.colorTheme.colorMetadata[
-                      "base-default"
-                    ].lightness[internalColorScheme] = value;
-                    const colors = generateColorSchemes(
-                      activeColorTheme.colorTheme.colors.light[11].hex,
-                      activeColorTheme.colorTheme.colorMetadata
-                    );
-
-                    updateColorTheme(
-                      {
-                        ...activeColorTheme.colorTheme,
-                        colors,
-                      },
-                      activeColorTheme.index,
-                      activeColorTheme.type
-                    );
-                  }
-                }}
-                onReset={() => {
-                  const test = getBaseDarkLightness(
-                    activeColorTheme.colorTheme.colors.light[11].hex
-                  ).toFixed(2);
-                  if (activeColorTheme) {
-                    activeColorTheme.colorTheme.colorMetadata[
-                      "base-default"
-                    ].lightness.dark = parseInt(test);
-                    const colors = generateColorSchemes(
-                      activeColorTheme.colorTheme.colors.light[11].hex,
-                      activeColorTheme.colorTheme.colorMetadata
-                    );
-
-                    updateColorTheme(
-                      {
-                        ...activeColorTheme.colorTheme,
-                        colors,
-                      },
-                      activeColorTheme.index,
-                      activeColorTheme.type
-                    );
-                  }
-                }}
-              />
-            )}
-
             <LightnessInput
-              label="Steg modifikator"
+              label="Base lightness økning/minking"
               description="Velg hvor mye lightness som skal øke eller minske for hvert steg for Base Hover- og Active fargene."
               value={
                 activeColorTheme.colorTheme.colorMetadata["base-default"]

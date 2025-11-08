@@ -82,7 +82,7 @@
   justify-content: center;
   font-size: 16px;
   font-weight: 500;
-  height: 54px;
+  height: 60px;
   color: var(--ds-color-accent-base-contrast-default);
   width: calc(50% - 8px);
   gap: 7px;
@@ -110,7 +110,7 @@
 
 .secondaryBtn {
   background-color: var(--ds-color-neutral-background-subtle);
-  color: var(--ds-color-neutral-text-secondary);
+  color: var(--ds-color-neutral-text-subtle);
   background-image: none;
   border: 1px solid var(--ds-color-neutral-border-default);
 }

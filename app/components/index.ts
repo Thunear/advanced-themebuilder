@@ -22,3 +22,4 @@ export { GradientSpace } from "./GradientSpace/GradientSpace ";
 export { ColorContrasts } from "./ColorContrasts/ColorContrasts";
 export { LightnessPresetInput } from "./LightnessPresetInput/LightnessPresetInput";
 export { ColorOverrideInput } from "./ColorOverrideInput/ColorOverrideInput";
+export { ColorSchemeSwitch } from "./ColorSchemeSwitch/ColorSchemeSwitch";
