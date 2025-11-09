@@ -21,6 +21,7 @@ export type ColorTheme = {
 export type BaseBorderRadius = number;
 export type PaneType =
   | "front"
+  | "themes"
   | "colors"
   | "colors/add"
   | "colors/edit"

@@ -4,22 +4,28 @@ import { useEffect, useState } from "react";
 import { useThemeStore } from "../../../store";
 
 import {
-  Dialog,
+  Button,
   Heading,
-  Tabs,
+  Paragraph,
   useMediaQuery,
 } from "@digdir/designsystemet-react";
-import { CogIcon, RocketIcon } from "@navikt/aksel-icons";
+import {
+  CogIcon,
+  PackageIcon,
+  PaletteIcon,
+  PencilLineIcon,
+  PlateIcon,
+  RocketIcon,
+  RulerIcon,
+  SquareGridIcon,
+} from "@navikt/aksel-icons";
 import { RadiusPane } from "../../panes/RadiusPane/RadiusPane";
-import { ColorsPane, FrontPane } from "../../panes";
+import { ColorsPane, FrontPane, ThemesPane } from "../../panes";
 import classes from "./Sidebar.module.css";
 
 export const Sidebar = () => {
   const activePane = useThemeStore((state) => state.activePane);
   const setActivePane = useThemeStore((state) => state.setActivePane);
-
-  const isMobile = useMediaQuery("(max-width: 768px)");
-  const [modalOpen, setModalOpen] = useState(false);
 
   const [isSticky, setSticky] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
@@ -35,23 +41,28 @@ export const Sidebar = () => {
     };
   }, []);
 
+  type CardProps = {
+    title: string;
+    icon?: React.ReactNode;
+    onClick?: () => void;
+    blurry?: boolean;
+  };
+
+  const Card = ({ title, icon, onClick, blurry }: CardProps) => {
+    return (
+      <div
+        className={cl(classes.card, blurry ? classes.blurry : "")}
+        onClick={onClick}
+      >
+        <div className={classes.icon}>{icon}</div>
+        <div>{title}</div>
+      </div>
+    );
+  };
+
   return (
     <>
       <div>
-        <button
-          className={cl(
-            classes.toggle,
-            showSidebar && classes.toggleOpen,
-            "ds-focus-visible"
-          )}
-          onClick={() => {
-            !isMobile && setShowSidebar(!showSidebar);
-            isMobile && setModalOpen(true);
-          }}
-          aria-label="Toggle sidebar"
-        >
-          <CogIcon title="tannhjul" fontSize="1.5rem" />
-        </button>
         <div
           className={cl(
             classes.sidebar,
@@ -59,8 +70,59 @@ export const Sidebar = () => {
             showSidebar && classes.showSidebar
           )}
         >
-          {activePane === "front" && <FrontPane />}
+          {activePane === "front" && (
+            <div>
+              <Heading data-size="xs" className={classes.title}>
+                Tilpass temaet ditt
+              </Heading>
+
+              <Paragraph data-size="sm" className={classes.description}>
+                Juster farger og avrunding på elementer (border radius), eller
+                velg et forhåndsdefinert tema for å komme raskere i gang. Flere
+                tilpasningsmuligheter vil komme etter hvert.
+              </Paragraph>
+
+              <div className={classes.cards}>
+                <Card
+                  onClick={() => setActivePane("colors")}
+                  title="Farger"
+                  icon={<PaletteIcon title="a11y-title" fontSize="1.5rem" />}
+                />
+                <Card
+                  onClick={() => setActivePane("radius")}
+                  title="Border-radius"
+                  icon={<PlateIcon title="a11y-title" fontSize="1.5rem" />}
+                />
+                <Card
+                  title="Typografi"
+                  icon={<PencilLineIcon title="a11y-title" fontSize="1.5rem" />}
+                  blurry
+                />
+                <Card
+                  title="Komponentstørrelser"
+                  icon={<PackageIcon title="a11y-title" fontSize="1.5rem" />}
+                  blurry
+                />
+                <Card
+                  title="Spacing"
+                  icon={<RulerIcon title="a11y-title" fontSize="1.5rem" />}
+                  blurry
+                />
+              </div>
+              <Button
+                data-color="neutral"
+                data-size="sm"
+                variant="tertiary"
+                onClick={() => setActivePane("themes")}
+                className={classes.themesBtn}
+              >
+                <PackageIcon title="a11y-title" fontSize="1.5rem" />
+                Velg et forhåndsdefinert tema
+              </Button>
+            </div>
+          )}
           {activePane === "radius" && <RadiusPane />}
+          {activePane === "themes" && <ThemesPane />}
           {activePane.startsWith("colors") && <ColorsPane />}
           {activePane === "front" && (
             <div className={classes.btnGroup}>
@@ -86,33 +148,6 @@ export const Sidebar = () => {
           )}
         </div>
       </div>
-
-      {isMobile && (
-        <Dialog
-          open={modalOpen}
-          className={classes.modal}
-          onClose={() => setModalOpen(false)}
-        >
-          <Dialog.Block>
-            <Heading>Tema</Heading>
-          </Dialog.Block>
-          <Dialog.Block className={classes.tabsWrapper}>
-            <Tabs
-              value={activePane}
-              onChange={(value) => setActivePane(value as "colors" | "radius")}
-            >
-              <Tabs.List>
-                <Tabs.Tab value="colors">Farger</Tabs.Tab>
-                <Tabs.Tab value="radius">Radius</Tabs.Tab>
-              </Tabs.List>
-
-              <Tabs.Panel className={classes.tabPanel} value="colors">
-                <ColorsPane />
-              </Tabs.Panel>
-            </Tabs>
-          </Dialog.Block>
-        </Dialog>
-      )}
     </>
   );
 };

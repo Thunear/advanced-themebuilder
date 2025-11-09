@@ -1,4 +1,4 @@
-import { Heading, Paragraph } from "@digdir/designsystemet-react";
+import { Button, Heading, Paragraph } from "@digdir/designsystemet-react";
 import {
   PackageIcon,
   PaletteIcon,
@@ -70,6 +70,9 @@ export const FrontPane = () => {
           icon={<RulerIcon title="a11y-title" fontSize="1.5rem" />}
           blurry
         />
+      </div>
+      <div>
+        <Button data-size="sm">Velg mellom predefinerte temaer</Button>
       </div>
     </div>
   );

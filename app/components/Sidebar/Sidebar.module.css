@@ -9,13 +9,6 @@
   flex-direction: column;
   box-shadow: var(--ds-shadow-xs);
   width: 100%;
-
-  & > div:first-child {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-height: 0;
-  }
 }
 
 .sticky {
@@ -26,17 +19,6 @@
   overflow-y: auto;
 }
 
-.tabContent {
-  flex: 1;
-  min-height: 0;
-}
-
-.tabPanel {
-  height: 100%;
-  padding: 0;
-  margin-top: 24px;
-}
-
 .showSidebar {
   display: block !important;
   top: 12px;
@@ -44,15 +26,6 @@
   right: 12px;
   bottom: 12px;
   position: fixed;
-}
-
-.appearance {
-  border-bottom: 1px solid var(--ds-color-neutral-border-subtle);
-  background-color: var(--ds-color-neutral-background-tinted);
-
-  & h4 {
-    margin-bottom: var(--ds-size-2);
-  }
 }
 
 .toggle {
@@ -115,42 +88,68 @@
   border: 1px solid var(--ds-color-neutral-border-default);
 }
 
-@media screen and (max-width: 1500px) {
-  .sidebar {
-    display: none;
-  }
-  .toggle {
-    display: block;
-  }
-  .toggleOpen {
-    right: 440px;
-  }
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
 }
 
-.modal {
-  /* --dsc-dialog-spacing: var(--ds-size-2); */
+.card {
+  padding: 20px 16px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--ds-color-neutral-border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  transition: 0.1s all;
+  position: relative;
+}
 
-  min-height: 90vh;
-  flex-direction: column;
+.card:hover {
+  border-color: var(--ds-color-neutral-border-default);
+  background-color: var(--ds-color-neutral-background-tinted);
+  cursor: pointer;
+}
 
-  & .modalBottom {
-    margin-top: auto;
-    padding: var(--ds-size-7);
-  }
+.icon {
+  display: flex;
+  align-items: center;
+}
 
-  & .tabsWrapper {
-    display: flex;
-    flex-direction: column;
-    height: 80vh;
-    padding: 0;
-  }
+.tokenContainer {
+  margin-top: 32px;
+}
 
-  & .tabContent {
-    overflow-x: none;
-    overflow-y: none;
-  }
+.title {
+  margin-bottom: 8px;
+}
 
-  /* & .tabPanel {
-    padding: var(--ds-size-4) 0;
-  } */
+.blurry:after {
+  background-color: var(--ds-color-neutral-surface-default);
+  opacity: 0.4;
+  position: absolute;
+  content: "";
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border-radius: 4px;
+}
+
+.blurry {
+  display: none;
+}
+
+.blurry:hover {
+  cursor: not-allowed;
+  border-color: var(--ds-color-neutral-border-subtle);
+  background-color: var(--ds-color-neutral-background-default);
+}
+
+.themesBtn {
+  margin-left: -12px;
+  margin-top: 16px;
 }
