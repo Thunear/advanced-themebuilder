@@ -3,7 +3,7 @@ import {
   type ColorMetadataByName,
   type ColorScheme,
   type ThemeInfo,
-  baseColors,
+  severityColors,
   colorMetadata,
   generateColorSchemes,
 } from "./colors";
@@ -66,6 +66,12 @@ type ColorStore = {
     support: ColorTheme[];
     severity: ColorTheme[];
   };
+  setColors: (colors: {
+    main: ColorTheme[];
+    neutral: ColorTheme[];
+    support: ColorTheme[];
+    severity: ColorTheme[];
+  }) => void;
   getColorTheme: (
     index: number,
     type: "main" | "neutral" | "support" | "severity"
@@ -100,6 +106,8 @@ type ColorStore = {
       | "radius"
       | "contrast"
   ) => void;
+  activeTheme: string | null;
+  setActiveTheme: (themeName: string | null) => void;
 };
 
 export const useThemeStore = create(
@@ -152,14 +160,6 @@ export const useThemeStore = create(
           }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
-        {
-          name: "accent",
-          colors: generateColorSchemes({
-            lightColor: "#1E98F5",
-            colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
-          }),
-          colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
-        },
       ],
       neutral: [
         {
@@ -173,17 +173,17 @@ export const useThemeStore = create(
       ],
       support: [
         {
-          name: "extra1",
+          name: "support1",
           colors: generateColorSchemes({
-            lightColor: "#F45F63",
+            lightColor: "#0D7A5F",
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
           }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
         {
-          name: "extra2",
+          name: "support1",
           colors: generateColorSchemes({
-            lightColor: "#E5AA20",
+            lightColor: "#5B3FA0",
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
           }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
@@ -193,7 +193,7 @@ export const useThemeStore = create(
         {
           name: "info",
           colors: generateColorSchemes({
-            lightColor: baseColors.blue,
+            lightColor: severityColors.info,
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
           }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
@@ -201,7 +201,7 @@ export const useThemeStore = create(
         {
           name: "success",
           colors: generateColorSchemes({
-            lightColor: baseColors.green,
+            lightColor: severityColors.success,
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
           }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
@@ -209,7 +209,7 @@ export const useThemeStore = create(
         {
           name: "warning",
           colors: generateColorSchemes({
-            lightColor: baseColors.orange,
+            lightColor: severityColors.warning,
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
           }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
@@ -217,7 +217,7 @@ export const useThemeStore = create(
         {
           name: "error",
           colors: generateColorSchemes({
-            lightColor: baseColors.red,
+            lightColor: severityColors.error,
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
           }),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
@@ -226,6 +226,7 @@ export const useThemeStore = create(
     },
     themeTab: "colorsystem",
     setThemeTab: (tab) => set({ themeTab: tab }),
+    setColors: (colors) => set({ colors }),
     addColor: (newColor, type) =>
       set((state) => {
         const updatedColors = state.colors[type].concat(newColor);
@@ -257,5 +258,7 @@ export const useThemeStore = create(
     setExternalColorScheme: (colorScheme) =>
       set({ externalColorScheme: colorScheme }),
     setBaseBorderRadius: (radius) => set({ baseBorderRadius: radius }),
+    activeTheme: "first",
+    setActiveTheme: (themeName) => set({ activeTheme: themeName }),
   }))
 );

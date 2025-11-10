@@ -2,7 +2,7 @@ export type ColorScheme = "light" | "dark";
 export type ContrastMode = "aa" | "aaa";
 export type ColorNumber = SemanticColorNumberMap[keyof SemanticColorNumberMap];
 export type ColorNames = keyof SemanticColorNumberMap;
-export type GlobalColors = "red" | "blue" | "green" | "orange" | "purple";
+export type GlobalColors = "error" | "info" | "success" | "warning" | "link";
 export type ColorError = "none" | "decorative" | "interaction";
 export type InterpolationMode =
   | "hcl"

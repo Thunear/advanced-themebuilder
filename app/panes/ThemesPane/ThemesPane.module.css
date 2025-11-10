@@ -28,6 +28,17 @@
   overflow: hidden;
 }
 
+.themeCard:hover {
+  cursor: pointer;
+  outline: 1px solid var(--ds-color-neutral-border-default);
+  border-color: var(--ds-color-neutral-border-default);
+}
+
+.themeCardActive {
+  outline: 1px solid var(--ds-color-neutral-border-default);
+  border-color: var(--ds-color-neutral-border-default);
+}
+
 .themeCardTitle {
   padding: 14px 16px;
   font-size: 16px;
@@ -50,11 +61,6 @@
   background-color: rgb(17, 70, 154);
   border-radius: 50%;
 }
-
-.themeCardColors .themeCardColor:nth-child(2n) {
-  background-color: rgb(3, 169, 244);
-}
-
 .themeCardBottom {
   display: flex;
 }

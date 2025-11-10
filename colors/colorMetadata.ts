@@ -6,12 +6,12 @@ import type {
   GlobalColors,
 } from "./types.js";
 
-export const baseColors: Record<GlobalColors, CssColor> = {
-  blue: "#0A71C0",
-  green: "#068718",
-  orange: "#EA9B1B",
-  purple: "#663299",
-  red: "#C01B1B",
+export const severityColors: Record<GlobalColors, CssColor> = {
+  info: "#0A71C0",
+  success: "#068718",
+  warning: "#EA9B1B",
+  error: "#C01B1B",
+  link: "#663299",
 };
 
 export const colorMetadata: ColorMetadataByName = {
