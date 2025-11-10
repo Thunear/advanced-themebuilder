@@ -1,4 +1,4 @@
-import { Button, Heading } from "@digdir/designsystemet-react";
+import { Button, Heading, Paragraph } from "@digdir/designsystemet-react";
 import classes from "./ThemesPane.module.css";
 import { useThemeStore } from "store";
 import { ChevronLeftIcon, CogIcon } from "@navikt/aksel-icons";
@@ -103,6 +103,11 @@ export const ThemesPane = () => {
       <Heading data-size="xs" className={classes.title}>
         Velg et forhåndsdefinert tema
       </Heading>
+
+      <Paragraph data-size="sm">
+        Velg et tema for å komme raskt i gang. Temaene er eksempler du kan bruke
+        som inspirasjon når du lager ditt eget.
+      </Paragraph>
 
       <div className={classes.cards}>
         {Object.keys(themes).map((themeKey) => {

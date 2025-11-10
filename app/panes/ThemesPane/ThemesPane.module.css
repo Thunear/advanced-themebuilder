@@ -13,13 +13,14 @@
 
 .title {
   margin-top: -4px;
+  margin-bottom: 8px;
 }
 
 .cards {
   display: flex;
   gap: 16px;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .themeCard {
