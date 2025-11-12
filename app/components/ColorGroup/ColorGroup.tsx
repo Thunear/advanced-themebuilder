@@ -62,10 +62,11 @@ export const ColorGroup = ({
             colorScale[internalColorScheme][
               colorMetadata[colorName].number - 1
             ];
+          const displayHex = (colorOverride || hex) as `#${string}`;
           const color: Color = {
             ...getColorMetadataByNumber(number),
             number,
-            hex,
+            hex: displayHex,
           };
           return (
             <div className={classes.test} key={index + "fragment" + namespace}>
@@ -76,7 +77,7 @@ export const ColorGroup = ({
               />
               <RovingFocusItem value={namespace + number} asChild>
                 <ColorSquare
-                  color={colorOverride ? colorOverride : hex}
+                  color={displayHex}
                   colorName={colorName}
                   showColorMeta={showColorMeta}
                   aria-label={`Se mer om ${namespace} ${color?.displayName}`}

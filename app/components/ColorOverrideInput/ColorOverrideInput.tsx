@@ -26,9 +26,15 @@ export const ColorOverrideInput = ({
     setCurrentValue(value);
   }, [value]);
 
+  const isValidHex = (hex: string) => {
+    if (!hex) return true; // Allow empty string to clear
+    return /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/.test(hex);
+  };
+
   const handleChange = (v: string) => {
-    if (v !== currentValue) {
-      setCurrentValue(v);
+    setCurrentValue(v);
+    // Only call onChange if it's a valid hex color or empty
+    if (isValidHex(v)) {
       onChange?.(v);
     }
   };
