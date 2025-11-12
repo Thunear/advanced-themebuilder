@@ -173,7 +173,7 @@ export const useThemeStore = create(
       ],
       support: [
         {
-          name: "support1",
+          name: "support-1",
           colors: generateColorSchemes({
             lightColor: "#0D7A5F",
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
@@ -181,7 +181,7 @@ export const useThemeStore = create(
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
         {
-          name: "support1",
+          name: "support-2",
           colors: generateColorSchemes({
             lightColor: "#5B3FA0",
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),

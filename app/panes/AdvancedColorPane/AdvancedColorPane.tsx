@@ -21,14 +21,8 @@ export const AdvancedColorPane = ({
   const internalColorScheme = useThemeStore(
     (state) => state.internalColorScheme
   );
-  const setInternalColorScheme = useThemeStore(
-    (state) => state.setInternalColorScheme
-  );
   const [saturationPage, setSaturationPage] = useState(false);
   const activeColorTheme = useThemeStore((state) => state.activeColorTheme);
-  const setActiveColorTheme = useThemeStore(
-    (state) => state.setActiveColorTheme
-  );
   const updateColorTheme = useThemeStore((state) => state.updateColorTheme);
   const [baseDarkLightness, setBaseDarkLightness] = useState(-1);
 
@@ -37,10 +31,17 @@ export const AdvancedColorPane = ({
       activeColorTheme.colorTheme.colorMetadata["base-default"].baseModifier[
         internalColorScheme
       ] = value;
-      const colors = generateColorSchemes(
-        activeColorTheme.colorTheme.colors.light[11].hex,
-        activeColorTheme.colorTheme.colorMetadata
-      );
+      const colors = generateColorSchemes({
+        lightColor: activeColorTheme.colorTheme.colors.light[11].hex,
+        darkColor:
+          activeColorTheme.colorTheme.colors.dark[
+            getBaseDarkLightness(
+              activeColorTheme.colorTheme.colors.light[11].hex
+            ) +
+              value * 11
+          ]?.hex,
+        colorMetaData: activeColorTheme.colorTheme.colorMetadata,
+      });
 
       updateColorTheme(
         {
