@@ -46,7 +46,7 @@ export const ColorGroup = ({
   }
 
   return (
-    <div>
+    <div className={classes.colorGroup} style={{ flex: colorNames.length }}>
       {header && <div className={cl(classes.header)}>{header}</div>}
       {header && names && (
         <div className={classes.names}>
@@ -69,7 +69,7 @@ export const ColorGroup = ({
             hex: displayHex,
           };
           return (
-            <div className={classes.test} key={index + "fragment" + namespace}>
+            <div className={classes.color} key={index + "fragment" + namespace}>
               <ColorModal
                 colorModalRef={colorModalRefs.current[index]}
                 namespace={namespace}

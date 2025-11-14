@@ -26,7 +26,7 @@ export const ColorRow = ({
   return (
     <div
       className={clsx(
-        classes.themes,
+        classes.colors,
         activeColorTheme.colorTheme.name === namespace &&
           activePane.startsWith("colors/") &&
           activePane !== "colors/lightness" &&
@@ -34,7 +34,7 @@ export const ColorRow = ({
       )}
     >
       <RovingFocusRoot activeValue={namespace + "1"} asChild>
-        <div className={classes.test}>
+        <>
           <ColorGroup
             header={showHeader ? "Background" : ""}
             colorNames={["background-default", "background-tinted"]}
@@ -92,7 +92,7 @@ export const ColorRow = ({
             ]}
             namespace={namespace}
           />
-        </div>
+        </>
       </RovingFocusRoot>
     </div>
   );

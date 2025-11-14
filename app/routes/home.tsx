@@ -127,7 +127,7 @@ export default function Home() {
               </>
             )}
           </div>
-          <div className={clsx(classes.aside, shrinkSidebar && classes.shrink)}>
+          <div className={clsx(classes.aside)}>
             <Sidebar />
           </div>
         </div>

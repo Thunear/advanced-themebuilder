@@ -2,7 +2,7 @@
   display: flex;
   gap: var(--ds-size-1);
   border-radius: 0;
-  justify-content: space-between;
+  width: 100%;
 }
 
 .header {
@@ -35,6 +35,19 @@
   justify-content: center;
   display: flex;
   height: var(--ds-size-11);
+}
+
+.colorGroup {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.color {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
 }
 
 @media (max-width: 1632px) {

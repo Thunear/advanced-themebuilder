@@ -2,6 +2,7 @@
   display: flex;
   gap: 28px;
   max-width: 100%;
+  overflow-x: hidden;
 }
 
 .main {
@@ -21,4 +22,22 @@
 
 .app {
   background-color: var(--ds-color-neutral-background-tinted);
+}
+
+@media (max-width: 1800px) {
+  .content {
+    gap: 20px;
+  }
+  .aside {
+    flex: 0 0 380px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .content {
+    gap: 0;
+  }
+  .aside {
+    flex: 0;
+  }
 }

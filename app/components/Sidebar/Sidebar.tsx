@@ -10,6 +10,7 @@ import {
   useMediaQuery,
 } from "@digdir/designsystemet-react";
 import {
+  ChevronLeftFirstIcon,
   CogIcon,
   PackageIcon,
   PaletteIcon,
@@ -17,7 +18,7 @@ import {
   PlateIcon,
   RocketIcon,
   RulerIcon,
-  SquareGridIcon,
+  ChevronRightLastIcon,
 } from "@navikt/aksel-icons";
 import { RadiusPane } from "../../panes/RadiusPane/RadiusPane";
 import { ColorsPane, FrontPane, ThemesPane } from "../../panes";
@@ -62,14 +63,25 @@ export const Sidebar = () => {
 
   return (
     <>
-      <div>
+      <div
+        className={cl(
+          classes.sidebar,
+          isSticky && classes.sticky,
+          showSidebar && classes.showSidebar
+        )}
+      >
         <div
-          className={cl(
-            classes.sidebar,
-            isSticky && classes.sticky,
-            showSidebar && classes.showSidebar
-          )}
+          className={classes.toggle}
+          onClick={() => setShowSidebar(!showSidebar)}
         >
+          {!showSidebar && (
+            <ChevronLeftFirstIcon title="a11y-title" fontSize="1.5rem" />
+          )}
+          {showSidebar && (
+            <ChevronRightLastIcon title="a11y-title" fontSize="1.5rem" />
+          )}
+        </div>
+        <div className={classes.sidebarContent}>
           {activePane === "front" && (
             <div>
               <Heading data-size="xs" className={classes.title}>

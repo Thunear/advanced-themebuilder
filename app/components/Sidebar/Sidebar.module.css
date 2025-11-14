@@ -1,7 +1,7 @@
 .sidebar {
   position: relative;
   z-index: 100;
-  padding: 24px 24px 24px 24px;
+  padding: 24px;
   background-color: var(--ds-color-neutral-surface-default);
   flex-grow: 1;
   border-radius: 8px;
@@ -9,6 +9,7 @@
   flex-direction: column;
   box-shadow: var(--ds-shadow-xs);
   width: 100%;
+  z-index: 10;
 }
 
 .sticky {
@@ -16,30 +17,6 @@
   top: 24px;
   width: 450px;
   max-height: calc(100vh - 48px);
-  overflow-y: auto;
-}
-
-.showSidebar {
-  display: block !important;
-  top: 12px;
-  margin-top: 0;
-  right: 12px;
-  bottom: 12px;
-  position: fixed;
-}
-
-.toggle {
-  position: fixed;
-  top: 120px;
-  right: 20px;
-  height: 52px;
-  width: 52px;
-  border-radius: 50%;
-  border: 1px solid var(--ds-color-neutral-border-subtle);
-  display: none;
-  z-index: 5;
-  background-color: var(--ds-color-neutral-background-default);
-  cursor: pointer;
 }
 
 .btnGroup {
@@ -152,4 +129,87 @@
 .themesBtn {
   margin-left: -12px;
   margin-top: 16px;
+}
+
+.toggle {
+  display: none;
+}
+
+.toggle svg {
+  font-size: 1.7rem;
+}
+
+@media (max-width: 1800px) {
+  .sidebar {
+    padding: 20px;
+  }
+  .sticky {
+    width: 380px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .sidebar {
+    padding: 0;
+    width: 420px;
+    position: absolute;
+    right: -420px;
+    box-shadow: none;
+    transition: right 0.25s ease-in-out;
+  }
+
+  .sidebar:after {
+    position: absolute;
+    top: 0;
+    left: -5px;
+    height: 56px;
+    width: 5px;
+    background-color: rgb(255, 255, 255);
+    content: "";
+    z-index: 555;
+    border-right: 1px solid rgb(234, 234, 234);
+    pointer-events: none;
+  }
+
+  .sidebar:after:hover {
+    background-color: var(--ds-color-neutral-surface-tinted);
+  }
+
+  .sidebarContent {
+    padding: 20px;
+    background-color: var(--ds-color-neutral-surface-default);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 0 0 0 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .showSidebar {
+    right: 0;
+  }
+
+  .sticky {
+    width: 420px;
+    position: fixed;
+  }
+
+  .toggle {
+    position: absolute;
+    top: 0;
+    border-radius: 8px 0 0 8px;
+    left: -56px;
+    background-color: var(--ds-color-neutral-surface-default);
+    height: 56px;
+    width: 56px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  .toggle:hover {
+    background-color: var(--ds-color-neutral-surface-tinted);
+  }
 }

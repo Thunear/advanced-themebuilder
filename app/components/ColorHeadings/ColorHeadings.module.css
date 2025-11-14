@@ -1,9 +1,11 @@
 .headings {
   display: flex;
-  gap: 16px;
-  padding-left: 95px;
+  gap: var(--ds-size-4);
+  padding-left: calc(90px + var(--ds-size-4));
   text-align: center;
   margin-bottom: -8px;
+  flex: 1;
+  min-width: 0;
 }
 
 .title {
@@ -14,20 +16,39 @@
 }
 
 .group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .labels {
   display: flex;
-  align-items: center;
-  gap: 4px;
+  align-items: stretch;
+  gap: var(--ds-size-1);
+  width: 100%;
+  flex: 1;
 }
 
 .label {
-  width: 70px;
+  flex: 1;
   font-size: 14px;
   text-align: center;
-  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 0;
+  word-break: break-word;
+  hyphens: auto;
+  padding: var(--ds-size-2) var(--ds-size-1);
+}
+
+@media (max-width: 1800px) {
+  /* big screens */
+  .headings {
+    padding-left: calc(75px + var(--ds-size-4));
+  }
+
+  .label {
+    font-size: 13px;
+  }
 }

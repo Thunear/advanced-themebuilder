@@ -4,6 +4,7 @@ body {
   color: var(--ds-color-neutral-text-default);
   background-color: var(--ds-color-neutral-background-tinted);
   margin: 0;
+  overflow-x: hidden;
 }
 
 .container {
@@ -11,6 +12,28 @@ body {
   width: 100%;
   margin: 0 auto;
   padding: 28px;
+  overflow-x: hidden;
+}
+
+@media (max-width: 1800px) {
+  /* big screens */
+  .container {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 1700px) {
+  /* big screens */
+  .container {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 1600px) {
+  /* big screens */
+  .container {
+    padding: 16px;
+  }
 }
 
 button {
