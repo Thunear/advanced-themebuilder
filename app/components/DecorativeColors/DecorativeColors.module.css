@@ -1,0 +1,49 @@
+.container {
+  margin-top: 2rem;
+}
+
+.section {
+  background-color: var(--ds-color-neutral-surface-default);
+  padding: 24px 24px;
+  border-radius: 8px;
+  box-shadow: var(--ds-shadow-xs);
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  padding-top: 8px;
+  align-items: center;
+}
+
+.rowLabel {
+  width: 100px;
+  font-size: 16px;
+}
+
+.labels {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  margin-left: 116px;
+}
+
+.stepLabel {
+  font-weight: 500;
+  font-size: 14px;
+  width: 70px;
+  text-align: center;
+}
+
+.lightnessLabel {
+  color: var(--ds-color-neutral-text-subtle);
+  margin-top: 8px;
+}
+
+@media (max-width: 1700px) {
+  .stepLabel {
+    width: 80px;
+  }
+}

@@ -23,3 +23,5 @@ export { ColorContrasts } from "./ColorContrasts/ColorContrasts";
 export { LightnessPresetInput } from "./LightnessPresetInput/LightnessPresetInput";
 export { ColorOverrideInput } from "./ColorOverrideInput/ColorOverrideInput";
 export { ColorSchemeSwitch } from "./ColorSchemeSwitch/ColorSchemeSwitch";
+export { DecorativeColors } from "./DecorativeColors/DecorativeColors";
+export { DecorativeColorRow } from "./DecorativeColorRow/DecorativeColorRow";

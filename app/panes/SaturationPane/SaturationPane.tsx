@@ -8,10 +8,11 @@ import {
   type CssColor,
   type InterpolationMode,
   generateColorSchemes,
+  generateDecorativeColors,
   getLuminanceFromLightness,
 } from "../../../colors";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
-import { type ColorTheme, useThemeStore } from "../../../store";
+import { useThemeStore } from "../../../store";
 import { ColorThemeSwitcher, SaturationRadio, Slider } from "../../components";
 import classes from "./SaturationPane.module.css";
 import { useEffect, useState } from "react";
@@ -26,9 +27,8 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
   const getColorTheme = useThemeStore((state) => state.getColorTheme);
   const updateColorTheme = useThemeStore((state) => state.updateColorTheme);
   const activeColorTheme = useThemeStore((state) => state.activeColorTheme);
-  const setActiveColorTheme = useThemeStore(
-    (state) => state.setActiveColorTheme
-  );
+  const decorativeSteps = useThemeStore((state) => state.decorativeSteps);
+
   const internalColorScheme = useThemeStore(
     (state) => state.internalColorScheme
   );
@@ -123,6 +123,12 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
         colors: preservedColors,
         lightColor: colorTheme.lightColor,
         darkColor: colorTheme.darkColor,
+        decorativeColors: generateDecorativeColors(
+          (colorTheme.lightColor?.hex ||
+            colorTheme.colors.light[11].hex) as CssColor,
+          decorativeSteps,
+          colorTheme.colorMetadata["background-default"].interpolation
+        ),
       },
       activeColorTheme.index,
       activeColorTheme.type
@@ -173,6 +179,13 @@ export const SaturationPane = ({ onBackClicked }: SaturationPaneProps) => {
         colors: preservedColors,
         lightColor: activeColorTheme.colorTheme.lightColor,
         darkColor: activeColorTheme.colorTheme.darkColor,
+        decorativeColors: generateDecorativeColors(
+          (activeColorTheme.colorTheme.lightColor?.hex ||
+            activeColorTheme.colorTheme.colors.light[11].hex) as CssColor,
+          decorativeSteps,
+          activeColorTheme.colorTheme.colorMetadata["background-default"]
+            .interpolation
+        ),
       },
       activeColorTheme.index,
       activeColorTheme.type

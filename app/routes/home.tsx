@@ -8,6 +8,7 @@ import {
   ColorPreview,
   ColorDetail,
   ColorContrasts,
+  DecorativeColors,
 } from "~/components";
 import type { Route } from "./+types/home";
 import classes from "./home.module.css";
@@ -15,6 +16,7 @@ import clsx from "clsx/lite";
 import { useThemeStore } from "store";
 import {
   generateColorSchemes,
+  generateDecorativeColors,
   getBaseDarkLightness,
   type CssColor,
 } from "colors";
@@ -32,10 +34,20 @@ export default function Home() {
   const externalColorScheme = useThemeStore(
     (state) => state.externalColorScheme
   );
+  const showDecorativeColors = useThemeStore(
+    (state) => state.showDecorativeColors
+  );
   const themeTab = useThemeStore((state) => state.themeTab);
   const colors = useThemeStore((state) => state.colors);
   const onColorThemeChange = useThemeStore((state) => state.onColorThemeChange);
   const updateColorTheme = useThemeStore((state) => state.updateColorTheme);
+  const decorativeSteps = useThemeStore((state) => state.decorativeSteps);
+  const decorativeStartLightness = useThemeStore(
+    (state) => state.decorativeStartLightness
+  );
+  const decorativeEndLightness = useThemeStore(
+    (state) => state.decorativeEndLightness
+  );
 
   useEffect(() => {
     const updatedMainColors = colors.main.map((color) => {
@@ -50,6 +62,13 @@ export default function Home() {
         name: color.name,
         colors: updatedColors,
         colorMetadata: color.colorMetadata,
+        decorativeColors: generateDecorativeColors(
+          color.colors.light[11].hex as CssColor,
+          decorativeSteps,
+          decorativeStartLightness,
+          decorativeEndLightness,
+          color.colorMetadata["background-default"].interpolation
+        ),
       };
     });
 
@@ -62,6 +81,13 @@ export default function Home() {
         name: color.name,
         colors: updatedColors,
         colorMetadata: color.colorMetadata,
+        decorativeColors: generateDecorativeColors(
+          color.colors.light[11].hex as CssColor,
+          decorativeSteps,
+          decorativeStartLightness,
+          decorativeEndLightness,
+          color.colorMetadata["background-default"].interpolation
+        ),
       };
     });
 
@@ -74,6 +100,13 @@ export default function Home() {
         name: color.name,
         colors: updatedColors,
         colorMetadata: color.colorMetadata,
+        decorativeColors: generateDecorativeColors(
+          color.colors.light[11].hex as CssColor,
+          decorativeSteps,
+          decorativeStartLightness,
+          decorativeEndLightness,
+          color.colorMetadata["background-default"].interpolation
+        ),
       };
     });
 
@@ -86,9 +119,15 @@ export default function Home() {
         name: color.name,
         colors: updatedColors,
         colorMetadata: color.colorMetadata,
+        decorativeColors: generateDecorativeColors(
+          color.colors.light[11].hex as CssColor,
+          decorativeSteps,
+          decorativeStartLightness,
+          decorativeEndLightness,
+          color.colorMetadata["background-default"].interpolation
+        ),
       };
     });
-    console.log("Updating colors due to theme change...");
 
     updatedMainColors.forEach((colorTheme, index) => {
       updateColorTheme(colorTheme, index, "main");
@@ -117,6 +156,7 @@ export default function Home() {
             {themeTab === "colorsystem" && (
               <>
                 <Colors />
+                {showDecorativeColors && <DecorativeColors />}
                 <ColorPreview />
                 <ColorDetail />
               </>

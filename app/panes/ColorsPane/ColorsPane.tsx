@@ -14,16 +14,23 @@ import { ChevronLeftIcon, CogIcon, PlusIcon } from "@navikt/aksel-icons";
 import { useEffect, useState } from "react";
 import { ColorService, useColor } from "react-color-palette";
 import { type ColorTheme, type PaneType, useThemeStore } from "../../../store";
-import { ColorInput } from "~/components";
+import { ColorInput, LightnessInput } from "~/components";
 import { ColorPane } from "../ColorPane/ColorPane";
 import { LightnessPane } from "../LightnessPane/LightnessPane";
 import classes from "./ColorsPane.module.css";
+import RangeSlider from "react-range-slider-input";
 
 export const ColorsPane = () => {
   type ColorType = "main" | "neutral" | "support" | "severity";
   const showSeverityColors = useThemeStore((state) => state.showSeverityColors);
   const setShowSeverityColors = useThemeStore(
-    (state) => state.setShowSeverityColors
+    (state) => state.setShowSeverityColors,
+  );
+  const showDecorativeColors = useThemeStore(
+    (state) => state.showDecorativeColors,
+  );
+  const setShowDecorativeColors = useThemeStore(
+    (state) => state.setShowDecorativeColors,
   );
   const removeColor = useThemeStore((state) => state.removeColor);
   const addColor = useThemeStore((state) => state.addColor);
@@ -33,15 +40,33 @@ export const ColorsPane = () => {
   const [initialName, setInitialName] = useState("");
   const activeColorTheme = useThemeStore((state) => state.activeColorTheme);
   const setActiveColorTheme = useThemeStore(
-    (state) => state.setActiveColorTheme
+    (state) => state.setActiveColorTheme,
   );
   const activePane = useThemeStore((state) => state.activePane);
   const setActivePane = useThemeStore((state) => state.setActivePane);
+  const decorativeSteps = useThemeStore((state) => state.decorativeSteps);
+  const setDecorativeSteps = useThemeStore((state) => state.setDecorativeSteps);
+  const setOnColorThemeChange = useThemeStore(
+    (state) => state.setOnColorThemeChange,
+  );
+  const decorativeStartLightness = useThemeStore(
+    (state) => state.decorativeStartLightness,
+  );
+  const setDecorativeStartLightness = useThemeStore(
+    (state) => state.setDecorativeStartLightness,
+  );
+  const decorativeEndLightness = useThemeStore(
+    (state) => state.decorativeEndLightness,
+  );
+  const setDecorativeEndLightness = useThemeStore(
+    (state) => state.setDecorativeEndLightness,
+  );
+  const onColorThemeChange = useThemeStore((state) => state.onColorThemeChange);
 
   const setupEditState = (
     colorTheme: ColorTheme,
     index: number,
-    colorType: ColorType
+    colorType: ColorType,
   ) => {
     setActivePane("colors/edit");
     setActiveColorTheme(
@@ -50,7 +75,7 @@ export const ColorsPane = () => {
       colorTheme,
       colorTheme.lightColor ||
         ColorService.convert("hex", colorTheme.colors.light[11].hex),
-      colorTheme.darkColor
+      colorTheme.darkColor,
     );
     setInitialColor(colorTheme.colors.light[11].hex);
     setInitialName(colorTheme.name);
@@ -61,7 +86,7 @@ export const ColorsPane = () => {
       0,
       "main",
       colors.main[0],
-      ColorService.convert("hex", colors.main[0].colors.light[11].hex)
+      ColorService.convert("hex", colors.main[0].colors.light[11].hex),
     );
     setActivePane("colors");
   };
@@ -75,15 +100,40 @@ export const ColorsPane = () => {
         lightColor: "#0062ba",
         colorMetaData: colorMetadata,
       }),
-      colorMetadata,
+      decorativeColors: {
+        light: [],
+        dark: [],
+      },
+      colorMetadata: colorMetadata,
     };
     addColor(newTheme, colorType);
     setActiveColorTheme(
       colors[colorType].length,
       colorType,
       newTheme,
-      ColorService.convert("hex", "#0062ba")
+      ColorService.convert("hex", "#0062ba"),
     );
+  };
+
+  const handleStepChange = (value: number) => {
+    setDecorativeSteps(value);
+    setOnColorThemeChange(onColorThemeChange + 1);
+  };
+
+  const handleStartLightnessChange = (value: number) => {
+    setDecorativeStartLightness(value);
+    setOnColorThemeChange(onColorThemeChange + 1);
+  };
+
+  const handleStopLightnessChange = (value: number) => {
+    setDecorativeEndLightness(value);
+    setOnColorThemeChange(onColorThemeChange + 1);
+  };
+
+  const test = (e: any) => {
+    setDecorativeStartLightness(100 - e[0]);
+    setDecorativeEndLightness(100 - e[1]);
+    setOnColorThemeChange(onColorThemeChange + 1);
   };
 
   return (
@@ -203,6 +253,46 @@ export const ColorsPane = () => {
             </div>
           </div>
 
+          {/* Decorative COLORS */}
+          <div className={classes.group}>
+            <div className={classes.groupHeader}>
+              <Heading data-size="2xs">Decorative</Heading>
+              <Switch
+                aria-labelledby=""
+                data-color="neutral"
+                data-size="sm"
+                checked={showDecorativeColors}
+                onChange={(e) => setShowDecorativeColors(e.target.checked)}
+              />
+            </div>
+            {!showDecorativeColors && (
+              <div className={classes.severityInfo}>
+                Aktiver for å sette opp dekorative farger
+              </div>
+            )}
+            {showDecorativeColors && (
+              <div className={classes.colors}>
+                <LightnessInput
+                  label="Antall steg"
+                  value={10}
+                  initialValue={10}
+                  onChange={(value) => handleStepChange(value)}
+                  onReset={(value) => handleStepChange(value)}
+                />
+
+                <div className={classes.label}>
+                  Sett lightness start og slutt
+                </div>
+                <RangeSlider
+                  min={0}
+                  max={100}
+                  defaultValue={[8, 70]}
+                  onInput={(e) => test(e)}
+                />
+              </div>
+            )}
+          </div>
+
           {/* Severity COLORS */}
           <div className={classes.group}>
             <div className={classes.groupHeader}>
@@ -262,10 +352,14 @@ export const ColorsPane = () => {
                     lightColor: initialColor as CssColor,
                     colorMetaData: colorMetadata,
                   }),
-                  colorMetadata,
+                  decorativeColors: {
+                    light: [],
+                    dark: [],
+                  },
+                  colorMetadata: colorMetadata,
                 },
                 activeColorTheme.index,
-                activeColorTheme.type
+                activeColorTheme.type,
               );
             }}
           />

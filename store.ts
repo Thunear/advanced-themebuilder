@@ -6,13 +6,20 @@ import {
   severityColors,
   colorMetadata,
   generateColorSchemes,
+  generateDecorativeColors,
 } from "./colors";
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 
+type DecorativeInfo = {
+  light: string[];
+  dark: string[];
+};
+
 export type ColorTheme = {
   name: string;
   colors: ThemeInfo;
+  decorativeColors: DecorativeInfo;
   colorMetadata: ColorMetadataByName;
   lightColor?: IColor;
   darkColor?: IColor;
@@ -31,6 +38,12 @@ export type PaneType =
   | "advancedColors";
 
 type ColorStore = {
+  decorativeStartLightness: number;
+  setDecorativeStartLightness: (lightness: number) => void;
+  decorativeEndLightness: number;
+  setDecorativeEndLightness: (lightness: number) => void;
+  decorativeSteps: number;
+  setDecorativeSteps: (steps: number) => void;
   activeLightPreset: string;
   setActiveLightPreset: (preset: string) => void;
   activeDarkPreset: string;
@@ -39,6 +52,8 @@ type ColorStore = {
   setShrinkSidebar: (shrink: boolean) => void;
   showSeverityColors: boolean;
   setShowSeverityColors: (show: boolean) => void;
+  showDecorativeColors: boolean;
+  setShowDecorativeColors: (show: boolean) => void;
   activeColorScale: string;
   setActiveColorScale: (scale: string) => void;
   activeColorTheme: {
@@ -53,7 +68,7 @@ type ColorStore = {
     type: "main" | "neutral" | "support" | "severity",
     colorTheme: ColorTheme,
     lightColor: IColor,
-    darkColor?: IColor
+    darkColor?: IColor,
   ) => void;
   onColorThemeChange: number;
   setOnColorThemeChange: (value: number) => void;
@@ -74,21 +89,21 @@ type ColorStore = {
   }) => void;
   getColorTheme: (
     index: number,
-    type: "main" | "neutral" | "support" | "severity"
+    type: "main" | "neutral" | "support" | "severity",
   ) => ColorTheme | undefined;
   addColor: (
     newColor: ColorTheme,
-    type: "main" | "neutral" | "support" | "severity"
+    type: "main" | "neutral" | "support" | "severity",
   ) => void;
   updateColorTheme: (
     updatedTheme: ColorTheme,
     index: number,
-    type: "main" | "neutral" | "support" | "severity"
+    type: "main" | "neutral" | "support" | "severity",
   ) => void;
   resetColors: () => void;
   removeColor: (
     index: number,
-    type: "main" | "neutral" | "support" | "severity"
+    type: "main" | "neutral" | "support" | "severity",
   ) => void;
   baseBorderRadius: BaseBorderRadius;
   setBaseBorderRadius: (radius: BaseBorderRadius) => void;
@@ -104,7 +119,7 @@ type ColorStore = {
       | "contrast"
       | "typography"
       | "radius"
-      | "contrast"
+      | "contrast",
   ) => void;
   activeTheme: string | null;
   setActiveTheme: (themeName: string | null) => void;
@@ -112,6 +127,14 @@ type ColorStore = {
 
 export const useThemeStore = create(
   subscribeWithSelector<ColorStore>((set) => ({
+    decorativeSteps: 10,
+    setDecorativeSteps: (steps) => set({ decorativeSteps: steps }),
+    decorativeStartLightness: 92,
+    setDecorativeStartLightness: (lightness) =>
+      set({ decorativeStartLightness: lightness }),
+    decorativeEndLightness: 30,
+    setDecorativeEndLightness: (lightness) =>
+      set({ decorativeEndLightness: lightness }),
     activeLightPreset: "aa",
     setActiveLightPreset: (preset) => set({ activeLightPreset: preset }),
     activeDarkPreset: "s-aa",
@@ -127,6 +150,10 @@ export const useThemeStore = create(
           lightColor: "#0062BA",
           colorMetaData: colorMetadata,
         }),
+        decorativeColors: {
+          light: [],
+          dark: [],
+        },
         colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
       },
     },
@@ -138,6 +165,8 @@ export const useThemeStore = create(
     setShrinkSidebar: (shrink) => set({ shrinkSidebar: shrink }),
     showSeverityColors: false,
     setShowSeverityColors: (show) => set({ showSeverityColors: show }),
+    showDecorativeColors: true,
+    setShowDecorativeColors: (show) => set({ showDecorativeColors: show }),
     activeColorScale: "primary",
     setActiveColorScale: (scale) => set({ activeColorScale: scale }),
     onColorThemeChange: 0,
@@ -158,6 +187,7 @@ export const useThemeStore = create(
             lightColor: "#0062BA",
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
           }),
+          decorativeColors: generateDecorativeColors("#0062BA", 12, "rgb"),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
       ],
@@ -168,6 +198,7 @@ export const useThemeStore = create(
             lightColor: "#1E2B3C",
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
           }),
+          decorativeColors: generateDecorativeColors("#1E2B3C", 12, "rgb"),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
       ],
@@ -178,6 +209,7 @@ export const useThemeStore = create(
             lightColor: "#0D7A5F",
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
           }),
+          decorativeColors: generateDecorativeColors("#0D7A5F", 12, "rgb"),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
         {
@@ -186,6 +218,7 @@ export const useThemeStore = create(
             lightColor: "#5B3FA0",
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
           }),
+          decorativeColors: generateDecorativeColors("#5B3FA0", 12, "rgb"),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
       ],
@@ -196,6 +229,7 @@ export const useThemeStore = create(
             lightColor: severityColors.info,
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
           }),
+          decorativeColors: generateDecorativeColors("#1E2B3C", 12, "rgb"),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
         {
@@ -204,6 +238,7 @@ export const useThemeStore = create(
             lightColor: severityColors.success,
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
           }),
+          decorativeColors: generateDecorativeColors("#1E2B3C", 12, "rgb"),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
         {
@@ -212,6 +247,7 @@ export const useThemeStore = create(
             lightColor: severityColors.warning,
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
           }),
+          decorativeColors: generateDecorativeColors("#1E2B3C", 12, "rgb"),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
         {
@@ -220,6 +256,7 @@ export const useThemeStore = create(
             lightColor: severityColors.error,
             colorMetaData: JSON.parse(JSON.stringify(colorMetadata)),
           }),
+          decorativeColors: generateDecorativeColors("#1E2B3C", 12, "rgb"),
           colorMetadata: JSON.parse(JSON.stringify(colorMetadata)),
         },
       ],
@@ -235,14 +272,14 @@ export const useThemeStore = create(
     updateColorTheme: (updatedColorTheme, index, type) =>
       set((state) => {
         const updatedColors = state.colors[type].map((color, i) =>
-          i === index ? updatedColorTheme : color
+          i === index ? updatedColorTheme : color,
         );
         return { colors: { ...state.colors, [type]: updatedColors } };
       }),
     resetColors: () => {
       set({
         colors: JSON.parse(
-          JSON.stringify({ main: [], neutral: [], support: [], severity: [] })
+          JSON.stringify({ main: [], neutral: [], support: [], severity: [] }),
         ),
       });
     },
@@ -260,5 +297,5 @@ export const useThemeStore = create(
     setBaseBorderRadius: (radius) => set({ baseBorderRadius: radius }),
     activeTheme: "first",
     setActiveTheme: (themeName) => set({ activeTheme: themeName }),
-  }))
+  })),
 );

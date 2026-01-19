@@ -81,9 +81,6 @@ export const ColorGroup = ({
                   colorName={colorName}
                   showColorMeta={showColorMeta}
                   aria-label={`Se mer om ${namespace} ${color?.displayName}`}
-                  onClick={() =>
-                    colorModalRefs.current[index]?.current?.showModal()
-                  }
                 />
               </RovingFocusItem>
             </div>

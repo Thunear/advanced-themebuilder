@@ -2,6 +2,7 @@ import {
   type CssColor,
   RESERVED_COLORS,
   generateColorSchemes,
+  generateDecorativeColors,
 } from "../../../colors";
 import {
   Button,
@@ -15,18 +16,16 @@ import {
   CogIcon,
   NotePencilIcon,
   TrashIcon,
-  XMarkIcon,
 } from "@navikt/aksel-icons";
 import { ColorPicker, ColorService, type IColor } from "react-color-palette";
 import { useThemeStore, type PaneType } from "../../../store";
 
 import cl from "clsx/lite";
-import { act, useState } from "react";
+import { useState } from "react";
 import { AdvancedColorPane } from "../AdvancedColorPane/AdvancedColorPane";
 import classes from "./ColorPane.module.css";
 import { ColorOverridePane } from "../ColorOverridePane/ColorOverridePane";
 import { ColorSchemeSwitch } from "~/components";
-import Color from "colorjs.io";
 
 type ColorPaneProps = {
   onClose: () => void;
@@ -45,6 +44,14 @@ export const ColorPane = ({
   const [colorError, setColorError] = useState("");
   const [advancedColors, setAdvancedColors] = useState(false);
   const [showOverridePane, setShowOverridePane] = useState(false);
+  const decorativeSteps = useThemeStore((state) => state.decorativeSteps);
+  const decorativeStartLightness = useThemeStore(
+    (state) => state.decorativeStartLightness
+  );
+  const decorativeEndLightness = useThemeStore(
+    (state) => state.decorativeEndLightness
+  );
+  const onColorThemeChange = useThemeStore((state) => state.onColorThemeChange);
   const updateColorTheme = useThemeStore((state) => state.updateColorTheme);
   const internalColorScheme = useThemeStore(
     (state) => state.internalColorScheme
@@ -128,6 +135,14 @@ export const ColorPane = ({
 
     const updatedTheme = {
       ...activeColorTheme.colorTheme,
+      decorativeColors: generateDecorativeColors(
+        color.hex as CssColor,
+        decorativeSteps,
+        decorativeStartLightness,
+        decorativeEndLightness,
+        activeColorTheme.colorTheme.colorMetadata["background-default"]
+          .interpolation
+      ),
       colors: preservedColors,
       lightColor: newLightColor,
       darkColor: newDarkColor,

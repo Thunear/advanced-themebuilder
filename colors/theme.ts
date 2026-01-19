@@ -1,7 +1,7 @@
 import chroma from "chroma-js";
 import * as R from "ramda";
 import { colorMetadata, getColorMetadataByNumber } from "./colorMetadata.js";
-import type { CssColor } from "./types.js";
+import type { CssColor, InterpolationMode } from "./types.js";
 import type {
   Color,
   ColorMetadataByName,
@@ -226,4 +226,32 @@ export const getCssVariable = (colorType: string, colorNumber: ColorNumber) => {
   return `--ds-color-${colorType}-${getColorMetadataByNumber(colorNumber)
     .displayName.toLowerCase()
     .replace(/\s/g, "-")}`;
+};
+
+export const generateDecorativeColors = (
+  color: CssColor,
+  decorativeSteps: number,
+  decorativeStartLightness: number,
+  decorativeEndLightness: number,
+  colorSpace: InterpolationMode
+) => {
+  const colorLightness = getLightnessFromHex(color);
+  const start = decorativeStartLightness;
+  const end = decorativeEndLightness;
+  const steps = decorativeSteps;
+  const lightColors = [];
+
+  for (let i = 0; i < steps; i++) {
+    const lightness = start + (end - start) * (i / (steps - 1));
+    lightColors.push(
+      chroma(color)
+        .luminance(getLuminanceFromLightness(lightness), colorSpace)
+        .hex() as CssColor
+    );
+  }
+
+  return {
+    light: lightColors,
+    dark: lightColors,
+  };
 };
