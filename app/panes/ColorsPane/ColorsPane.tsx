@@ -120,16 +120,6 @@ export const ColorsPane = () => {
     setOnColorThemeChange(onColorThemeChange + 1);
   };
 
-  const handleStartLightnessChange = (value: number) => {
-    setDecorativeStartLightness(value);
-    setOnColorThemeChange(onColorThemeChange + 1);
-  };
-
-  const handleStopLightnessChange = (value: number) => {
-    setDecorativeEndLightness(value);
-    setOnColorThemeChange(onColorThemeChange + 1);
-  };
-
   const test = (e: any) => {
     setDecorativeStartLightness(100 - e[0]);
     setDecorativeEndLightness(100 - e[1]);

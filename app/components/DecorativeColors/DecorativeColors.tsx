@@ -26,18 +26,22 @@ export const DecorativeColors = () => {
       />
       <div className={classes.section} data-color-scheme={internalColorScheme}>
         <div className={classes.labels}>
-          {Array.from({ length: decorativeSteps }, (_, index) => (
-            <div key={index} className={classes.stepLabel}>
-              deco-{index + 1}
-              <div className={classes.lightnessLabel}>
-                {getLightnessFromHex(
-                  colors.main[0].decorativeColors[internalColorScheme][
-                    index
-                  ] as `#${string}`,
-                ).toFixed(0)}
+          {Array.from({ length: decorativeSteps }, (_, index) => {
+            const decorativeColor =
+              colors.main[0]?.decorativeColors?.[internalColorScheme]?.[index];
+            return (
+              <div key={index} className={classes.stepLabel}>
+                deco-{index + 1}
+                <div className={classes.lightnessLabel}>
+                  {decorativeColor
+                    ? getLightnessFromHex(
+                        decorativeColor as `#${string}`,
+                      ).toFixed(0)
+                    : "-"}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         {colors.main.map((color, index) => (
           <div key={index} className={classes.row}>

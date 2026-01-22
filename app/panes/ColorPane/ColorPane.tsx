@@ -3,6 +3,7 @@ import {
   RESERVED_COLORS,
   generateColorSchemes,
   generateDecorativeColors,
+  getContrastFromHex,
 } from "../../../colors";
 import {
   Button,
@@ -12,8 +13,10 @@ import {
 } from "@digdir/designsystemet-react";
 import {
   ArrowCirclepathReverseIcon,
+  CheckmarkCircleIcon,
   ChevronLeftIcon,
   CogIcon,
+  ExclamationmarkTriangleIcon,
   NotePencilIcon,
   TrashIcon,
 } from "@navikt/aksel-icons";
@@ -21,7 +24,7 @@ import { ColorPicker, ColorService, type IColor } from "react-color-palette";
 import { useThemeStore, type PaneType } from "../../../store";
 
 import cl from "clsx/lite";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { AdvancedColorPane } from "../AdvancedColorPane/AdvancedColorPane";
 import classes from "./ColorPane.module.css";
 import { ColorOverridePane } from "../ColorOverridePane/ColorOverridePane";
@@ -46,21 +49,30 @@ export const ColorPane = ({
   const [showOverridePane, setShowOverridePane] = useState(false);
   const decorativeSteps = useThemeStore((state) => state.decorativeSteps);
   const decorativeStartLightness = useThemeStore(
-    (state) => state.decorativeStartLightness
+    (state) => state.decorativeStartLightness,
   );
   const decorativeEndLightness = useThemeStore(
-    (state) => state.decorativeEndLightness
+    (state) => state.decorativeEndLightness,
   );
   const onColorThemeChange = useThemeStore((state) => state.onColorThemeChange);
   const updateColorTheme = useThemeStore((state) => state.updateColorTheme);
   const internalColorScheme = useThemeStore(
-    (state) => state.internalColorScheme
+    (state) => state.internalColorScheme,
   );
 
   const activeColorTheme = useThemeStore((state) => state.activeColorTheme);
   const setActiveColorTheme = useThemeStore(
-    (state) => state.setActiveColorTheme
+    (state) => state.setActiveColorTheme,
   );
+
+  const showContrastError = useMemo(() => {
+    const colors = activeColorTheme.colorTheme.colors[internalColorScheme];
+    if (colors?.[11]?.hex && colors?.[1]?.hex) {
+      const contrast = getContrastFromHex(colors[11].hex, colors[1].hex);
+      return contrast < 3;
+    }
+    return false;
+  }, [activeColorTheme.colorTheme.colors, internalColorScheme]);
 
   const getHeading = () => {
     const t = activeColorTheme.type === "main" ? "hovedfarge" : "støttefarge";
@@ -88,7 +100,7 @@ export const ColorPane = ({
       RESERVED_COLORS.includes(activeColorTheme.colorTheme.name.toLowerCase())
     ) {
       setColorError(
-        "Navnet på fargen kan ikke være det samme som våre systemfarger"
+        "Navnet på fargen kan ikke være det samme som våre systemfarger",
       );
       return false;
     }
@@ -141,7 +153,7 @@ export const ColorPane = ({
         decorativeStartLightness,
         decorativeEndLightness,
         activeColorTheme.colorTheme.colorMetadata["background-default"]
-          .interpolation
+          .interpolation,
       ),
       colors: preservedColors,
       lightColor: newLightColor,
@@ -153,12 +165,12 @@ export const ColorPane = ({
       activeColorTheme.type,
       updatedTheme,
       newLightColor,
-      newDarkColor
+      newDarkColor,
     );
     updateColorTheme(
       updatedTheme,
       activeColorTheme.index,
-      activeColorTheme.type
+      activeColorTheme.type,
     );
   };
 
@@ -214,18 +226,13 @@ export const ColorPane = ({
           <Heading data-size="xs" className={classes.title}>
             {getHeading()}
           </Heading>
-          {/* {showAlert() && (
-            <div className={classes.alert}>
-              Fargen har lav kontrast mot en eller flere av overflatefargene som
-              påvirker bruken. Les mer om hva dette betyr på kontrast siden.
-            </div>
-          )} */}
           {activeColorTheme.type === "neutral" ||
             (activeColorTheme.type === "severity" && (
               <Paragraph data-size="sm" className={classes.desc}>
                 Du kan ikke endre navnet på denne fargen.
               </Paragraph>
             ))}
+
           {activeColorTheme.type !== "neutral" &&
             activeColorTheme.type !== "severity" && (
               <Textfield
@@ -251,12 +258,12 @@ export const ColorPane = ({
                     activeColorTheme.type,
                     updatedTheme,
                     activeColorTheme.lightColor,
-                    activeColorTheme.darkColor
+                    activeColorTheme.darkColor,
                   );
                   updateColorTheme(
                     updatedTheme,
                     activeColorTheme.index,
-                    activeColorTheme.type
+                    activeColorTheme.type,
                   );
                 }}
                 onBlur={checkNameIsValid}
@@ -274,12 +281,31 @@ export const ColorPane = ({
                   internalColorScheme === "light"
                     ? (activeColorTheme.lightColor.hex as string)
                     : activeColorTheme.darkColor
-                    ? (activeColorTheme.darkColor.hex as string)
-                    : activeColorTheme.colorTheme.colors.dark[11].hex,
+                      ? (activeColorTheme.darkColor.hex as string)
+                      : activeColorTheme.colorTheme.colors.dark[11].hex,
               }}
               className={classes.colorPreview}
             ></div>
           </div>
+
+          {showContrastError && (
+            <div className={classes.alert}>
+              <ExclamationmarkTriangleIcon
+                title="a11y-title"
+                fontSize="1.5rem"
+              />
+              <span>
+                Fargen har lav kontrast. Les mer <a href="#">her.</a>
+              </span>
+            </div>
+          )}
+          {!showContrastError && (
+            <div className={classes.alert}>
+              <CheckmarkCircleIcon title="a11y-title" fontSize="1.5rem" />
+              Den valgte fargen har god kontrast.
+            </div>
+          )}
+
           <ColorPicker
             hideAlpha
             color={
@@ -288,7 +314,7 @@ export const ColorPane = ({
                 : activeColorTheme.darkColor ||
                   ColorService.convert(
                     "hex",
-                    activeColorTheme.colorTheme.colors.dark[11].hex
+                    activeColorTheme.colorTheme.colors.dark[11].hex,
                   )
             }
             onChange={(color: IColor) => {
@@ -324,12 +350,12 @@ export const ColorPane = ({
                     activeColorTheme.type,
                     updatedTheme,
                     activeColorTheme.lightColor,
-                    undefined
+                    undefined,
                   );
                   updateColorTheme(
                     updatedTheme,
                     activeColorTheme.index,
-                    activeColorTheme.type
+                    activeColorTheme.type,
                   );
                 }}
               >

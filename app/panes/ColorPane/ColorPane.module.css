@@ -34,7 +34,7 @@
 
 .colorPreviewContainer {
   border: 1px solid var(--ds-color-neutral-border-subtle);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   margin-top: 16px;
   border-radius: 8px;
 }
@@ -89,12 +89,12 @@
 }
 
 .alert {
-  background-color: var(--ds-color-warning-surface-tinted);
-  padding: 16px;
-  border-radius: 4px;
+  padding: 8px 0;
   font-size: 16px;
   margin-bottom: 12px;
-  border-left: 5px solid var(--ds-color-warning-border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .darkNote {
